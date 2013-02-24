@@ -1,0 +1,9 @@
+INDEX VERSION 1.126+C:\Users\asus\Documents\GitHub\Multimodal2\.metadata\.plugins\org.eclipse.jdt.core
+123609574.index
+2252502528.index
+1813923933.index
+3441175534.index
+715257351.index
+891809402.index
+1004143795.index
+1158196460.index
