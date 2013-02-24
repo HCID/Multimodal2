@@ -14,7 +14,7 @@ public class UserInputInterpreter {
 	    public String time;
 	    FuzzyTime exactTime;	    
 	}
-	enum CommandType{
+	public enum CommandType{
 	    DISPLAY, CANCEL, MOVE, BOOK, WHEN, WHERE, WHO
 	};
 	Room exactLocation;
