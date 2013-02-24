@@ -51,20 +51,20 @@
         <GridView
             android:id="@+id/calendar"
             android:layout_width="fill_parent"
-            android:layout_height="196dp"
-            android:layout_weight="10853.12"
-            android:numColumns="7" >
+            android:layout_height="276dp"
+            android:numColumns="7"
+             >
         </GridView>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="59dp"
+            android:layout_height="46dp"
             android:layout_gravity="bottom"
-            android:gravity="bottom" >
+            android:gravity="left" >
 
             <EditText
                 android:id="@+id/editText1"
-                android:layout_width="145dp"
+                android:layout_width="173dp"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="39dp"
                 android:ems="10"
@@ -72,20 +72,16 @@
 
             <Button
                 android:id="@+id/button1"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="19dp"
-                android:layout_marginTop="31dp"
-                android:layout_weight="10853.12"
-                android:text="Add Event" />
-
+                android:layout_weight="1.76"
+                android:text="@string/add_event" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="57dp"
             android:layout_gravity="bottom"
-            android:gravity="bottom"
             android:orientation="horizontal" >
 
             <Spinner
