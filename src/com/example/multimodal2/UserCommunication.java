@@ -16,7 +16,7 @@ public class UserCommunication {
 		if(this.tts != null) {
 			this.tts.speak("You said: "+text, TextToSpeech.QUEUE_FLUSH, null);
 		}
-		UserInputInterpreter.userSaid(text);
+		UserInputInterpreter uii = new UserInputInterpreter(text);
 		
 	}
 
