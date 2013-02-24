@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	android:orientation="vertical"
-	android:layout_width="fill_parent"
-	android:layout_height="fill_parent"
-	android:background="@drawable/bg">
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/bg"
+    android:gravity="bottom|top"
+    android:orientation="vertical" >
 
-
-	<LinearLayout
-		xmlns:android="http://schemas.android.com/apk/res/android"
+	<LinearLayout 
+	 
 		android:orientation="horizontal"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content">
 
 		<ImageView
 		    android:id="@+id/prevMonth"
-		    android:layout_width="91dp"
+		    android:layout_width="58dp"
 		    android:layout_height="51dp"
 		    android:src="@drawable/last" />
 
 		<Button
 		    android:id="@+id/currentMonth"
-		    android:layout_width="229dp"
+		    android:layout_width="204dp"
 		    android:layout_height="48dp"
 		    android:background="@drawable/year"
 		    android:textAppearance="?android:attr/textAppearanceMedium"
@@ -29,66 +29,79 @@
 
 		<ImageView
 		    android:id="@+id/nextMonth"
-		    android:layout_width="68dp"
+		    android:layout_width="match_parent"
 		    android:layout_height="match_parent"
 		    android:src="@drawable/next" />
 
 	</LinearLayout>
 
-	<LinearLayout
-	    android:layout_width="fill_parent"
-	    android:layout_height="wrap_content"
-	    android:layout_gravity="center" >
-
-	    <ImageView
-	        android:id="@+id/calendarheader"
-	        android:layout_width="345dp"
-	        android:layout_height="55dp"
-	        android:layout_gravity="center"
-	        android:layout_weight="10853.12"
-	        android:src="@drawable/week" >
-	    </ImageView>
-	</LinearLayout>
-	
-	<GridView
-		android:id="@+id/calendar"
-		android:numColumns="7"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content">
-	</GridView>
-
-	 <Button
-        android:id="@+id/speech_btn"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:text="Speak" />
-	
-	<EditText
-	    android:id="@+id/editText1"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:layout_marginLeft="39dp"
-	    android:ems="10"
-	    android:hint="Type event" >
+        android:gravity="bottom"
+        android:orientation="vertical" >
 
-	    <requestFocus />
-	</EditText>
+        <ImageView
+            android:id="@+id/calendarheader"
+            android:layout_width="345dp"
+            android:layout_height="55dp"
+            android:layout_weight="10853.12"
+            android:src="@drawable/week" />
 
-	<Button
-	    android:id="@+id/button1"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:layout_marginLeft="19dp"
-	    android:layout_marginTop="31dp"
-	    android:text="Add Event" />
+        <GridView
+            android:id="@+id/calendar"
+            android:layout_width="fill_parent"
+            android:layout_height="196dp"
+            android:layout_weight="10853.12"
+            android:numColumns="7" >
+        </GridView>
 
-    <Spinner
-        android:id="@+id/spinner1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="59dp"
+            android:layout_gravity="bottom"
+            android:gravity="bottom" >
+
+            <EditText
+                android:id="@+id/editText1"
+                android:layout_width="145dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="39dp"
+                android:ems="10"
+                android:hint="Type event" />
+
+            <Button
+                android:id="@+id/button1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="19dp"
+                android:layout_marginTop="31dp"
+                android:layout_weight="10853.12"
+                android:text="Add Event" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="57dp"
+            android:layout_gravity="bottom"
+            android:gravity="bottom"
+            android:orientation="horizontal" >
+
+            <Spinner
+                android:id="@+id/spinner1"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="10853.12" />
+
+            <Button
+                android:id="@+id/speech_btn"
+                android:layout_width="78dp"
+                android:layout_height="match_parent"
+                android:text="Speak" />
+
+        </LinearLayout>
+
+    </LinearLayout>
 	
 </LinearLayout>

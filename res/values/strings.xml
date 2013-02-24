@@ -4,6 +4,6 @@
     <string name="app_name">Multimodal</string>
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
-    <string name="last month">&lt;&lt;</string>
-	<string name="next month">>></string>
+    <string name="last_month">&lt;&lt;</string>
+	<string name="next_month">>></string>
 </resources>

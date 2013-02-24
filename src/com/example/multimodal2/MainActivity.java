@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.TextToSpeech.OnInitListener;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -48,7 +47,7 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.activity_main, menu);
+		//getMenuInflater().inflate(R.menu.activity_main, menu);
 		return true;
 	}
 
@@ -69,7 +68,6 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 			listenIntent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1);
 			startActivityForResult(listenIntent, VR_REQUEST);
 		}
-
 	}
 
 
