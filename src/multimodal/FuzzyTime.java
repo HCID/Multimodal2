@@ -2,7 +2,7 @@ package multimodal;
 
 import java.util.Date;
 
-public class FuzzyTime {
+public class FuzzyTime implements Cloneable{
 	private static final long DEFAULT_DEVIATION_SEC = 10*60;
 	long deviationSeconds;
 	Date startTime;
@@ -41,6 +41,19 @@ public class FuzzyTime {
 	public static FuzzyTime nowPlusSeconds(long seconds) {
 		Date now = new Date();
 		return new FuzzyTime(new Date(now.getTime()+seconds*1000));
+	}
+	
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		return new FuzzyTime((Date)this.startTime.clone(), (Date)this.endTime.clone(), this.deviationSeconds);
+	}
+
+	public Date getCenter() {
+		return new Date((this.endTime.getTime()+this.startTime.getTime())/2);
+	}
+
+	public long getCenterDeviation() {
+		return this.durationSeconds+this.deviationSeconds;
 	}
 	
 }

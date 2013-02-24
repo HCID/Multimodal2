@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.LinkedList;
 
 import multimodal.Constraint;
+import multimodal.FuzzyTime;
 
 public class Schedule {
 	
@@ -24,7 +25,7 @@ public class Schedule {
 		return this.bookings.contains(booking);
 	}
 	
-	public Booking findBookingNear(Date near, int deviationSeconds){
+	public Booking findBookingNear(Date near, long deviationSeconds){
 		for(Booking b : bookings){
 			long diff = Math.abs((b.getStartTime().getTime() - near.getTime())/1000);
 			if(diff<deviationSeconds){
@@ -36,6 +37,10 @@ public class Schedule {
 	public Booking findBookingNear(Date near){
 		//default deviation 45min.
 		return findBookingNear(near, 45*60);
+	}
+	public Booking findBookingNear(FuzzyTime fuzzyTime){
+		//default deviation 45min.
+		return findBookingNear(fuzzyTime.getCenter(), fuzzyTime.getCenterDeviation());
 	}
 	
 	private void addToSchedule(Booking booking) {

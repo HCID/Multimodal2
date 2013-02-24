@@ -3,6 +3,8 @@ package multimodal.schedule;
 import java.util.Date;
 import java.util.LinkedList;
 
+import multimodal.FuzzyTime;
+
 public class Booking {
 	final private Date startTime;
 	final private Date endTime;
