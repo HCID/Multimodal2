@@ -1,19 +1,16 @@
 package com.example.multimodal2;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+
+import android.content.Context;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 
-import android.content.Context;
-
 public class RDFModel {
 	RDFModel(Context context){
-		org.apache.log4j.BasicConfigurator.configure();
+		
 		
 		Model model = ModelFactory.createDefaultModel();
 		InputStream f;

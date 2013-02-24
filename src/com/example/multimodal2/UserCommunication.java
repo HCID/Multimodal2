@@ -8,7 +8,7 @@ public class UserCommunication {
 	Activity ma;
 	TextToSpeech tts;
 	public UserCommunication(Activity ma) {
-		org.apache.log4j.BasicConfigurator.configure();
+		
 		this.ma = ma;
 	}
 	
