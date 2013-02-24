@@ -9,10 +9,8 @@ import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 
 public class RDFModel {
+	private Model model = ModelFactory.createDefaultModel();
 	RDFModel(Context context){
-		
-		
-		Model model = ModelFactory.createDefaultModel();
 		InputStream f;
 		try {
 			f = context.getAssets().open("rdfmodel.xml");
@@ -22,5 +20,9 @@ public class RDFModel {
 			e.printStackTrace();
 		} 
 		
+	}
+	
+	public Model getModel() {
+		return this.model;
 	}
 }
