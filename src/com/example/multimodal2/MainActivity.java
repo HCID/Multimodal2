@@ -24,6 +24,7 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 	private final String LOG_TAG = "SpeechRepeatActivity";
 	private int MY_DATA_CHECK_CODE = 0;
 	private TextToSpeech repeatTTS;
+	private UserCommunication uc = new UserCommunication();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -76,8 +77,7 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 		if (requestCode == VR_REQUEST && resultCode == RESULT_OK)
 		{
 			ArrayList<String> suggestedWords = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-			Toast.makeText(MainActivity.this, "You said: "+suggestedWords.get(0), Toast.LENGTH_LONG).show();
-			repeatTTS.speak("You said: "+suggestedWords.get(0), TextToSpeech.QUEUE_FLUSH, null);
+			uc.userSaid(suggestedWords.get(0), MainActivity.this, repeatTTS);
 		} 
 		else if (requestCode == MY_DATA_CHECK_CODE)
 		{
