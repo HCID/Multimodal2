@@ -18,7 +18,7 @@ public class RDFModel {
 		Model model = ModelFactory.createDefaultModel();
 		InputStream f;
 		try {
-			f = context.getAssets().open("rdf-model.xml");
+			f = context.getAssets().open("rdfmodel.xml");
 			model.read(f, "http://imi.org/");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
