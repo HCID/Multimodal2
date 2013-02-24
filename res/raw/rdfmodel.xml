@@ -1,0 +1,183 @@
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  xmlns:ex="http://imi.org/">
+
+<!-- Modality -->
+<rdf:Description rdf:about="Input">
+  <rdf:type rdf:resource="Modality"/>
+</rdf:Description>
+
+    <rdf:Description rdf:about="Tactile">
+      <rdf:type rdf:resource="Input"/>
+      <ex:hasConstraint rdf:resource="Bright"/>
+      <ex:hasConstraint rdf:resource="Dim"/>
+      <ex:hasConstraint rdf:resource="Noisy"/>
+      <ex:hasConstraint rdf:resource="Public"/>
+      <ex:hasConstraint rdf:resource="Private"/>
+      <ex:hasConstraint rdf:resource="Sitting"/>
+      <ex:hasConstraint rdf:resource="Standing"/>
+    </rdf:Description>
+    
+    <rdf:Description rdf:about="Speech">
+      <rdf:type rdf:resource="Input"/>
+      <ex:hasConstraint rdf:resource="Bright"/>
+      <ex:hasConstraint rdf:resource="Dim"/>
+      <ex:hasConstraint rdf:resource="Calm"/>
+      <ex:hasConstraint rdf:resource="Private"/>
+      <ex:hasConstraint rdf:resource="Moving"/>
+      <ex:hasConstraint rdf:resource="Sitting"/>
+      <ex:hasConstraint rdf:resource="Standing"/>
+    </rdf:Description>
+
+<rdf:Description rdf:about="Output">
+  <rdf:type rdf:resource="Modality"/>
+</rdf:Description>
+
+    <rdf:Description rdf:about="Music">
+      <rdf:type rdf:resource="Output"/>
+      <ex:hasConstraint rdf:resource="Bright"/>
+      <ex:hasConstraint rdf:resource="Dim"/>
+      <ex:hasConstraint rdf:resource="Calm"/>
+      <ex:hasConstraint rdf:resource="Private"/>
+      <ex:hasConstraint rdf:resource="Moving"/>
+      <ex:hasConstraint rdf:resource="Sitting"/>
+      <ex:hasConstraint rdf:resource="Standing"/>
+    </rdf:Description>
+    
+    <rdf:Description rdf:about="Light">
+      <rdf:type rdf:resource="Output"/>
+      <ex:hasConstraint rdf:resource="Bright"/>
+      <ex:hasConstraint rdf:resource="Dim"/>
+      <ex:hasConstraint rdf:resource="Noisy"/>
+      <ex:hasConstraint rdf:resource="Calm"/>
+      <ex:hasConstraint rdf:resource="Private"/>
+      <ex:hasConstraint rdf:resource="Moving"/>
+      <ex:hasConstraint rdf:resource="Sitting"/>
+      <ex:hasConstraint rdf:resource="Standing"/>
+    </rdf:Description>
+    
+    <rdf:Description rdf:about="Tactile">
+      <rdf:type rdf:resource="Output"/>
+      <ex:hasConstraint rdf:resource="Bright"/>
+      <ex:hasConstraint rdf:resource="Dim"/>
+      <ex:hasConstraint rdf:resource="Noisy"/>
+      <ex:hasConstraint rdf:resource="Calm"/>
+      <ex:hasConstraint rdf:resource="Public"/>
+      <ex:hasConstraint rdf:resource="Private"/>
+      <ex:hasConstraint rdf:resource="Moving"/>
+      <ex:hasConstraint rdf:resource="Sitting"/>
+      <ex:hasConstraint rdf:resource="Standing"/>
+    </rdf:Description>
+    
+    <rdf:Description rdf:about="Speech">
+      <rdf:type rdf:resource="Output"/>
+      <ex:hasConstraint rdf:resource="Bright"/>
+      <ex:hasConstraint rdf:resource="Dim"/>
+      <ex:hasConstraint rdf:resource="Calm"/>
+      <ex:hasConstraint rdf:resource="Private"/>
+      <ex:hasConstraint rdf:resource="Moving"/>
+      <ex:hasConstraint rdf:resource="Sitting"/>
+      <ex:hasConstraint rdf:resource="Standing"/>
+    </rdf:Description>
+
+<!-- Modality End -->
+
+<!-- Rooms -->
+<rdf:Description rdf:about="OfficeRoom">
+  <rdf:type rdf:resource="Room"/>
+  <ex:hasConstraint rdf:resource="Bright"/>
+  <ex:hasConstraint rdf:resource="Noisy"/>
+  <ex:hasConstraint rdf:resource="Public"/>
+  <ex:hasConstraint rdf:resource="Sitting"/>
+</rdf:Description>
+<rdf:Description rdf:about="MeetingRoom">
+  <rdf:type rdf:resource="Room"/>
+  <ex:hasConstraint rdf:resource="Bright"/>
+  <ex:hasConstraint rdf:resource="Noisy"/>
+  <ex:hasConstraint rdf:resource="Private"/>
+  <ex:hasConstraint rdf:resource="Sitting"/>
+</rdf:Description>
+<rdf:Description rdf:about="Hallway">
+  <rdf:type rdf:resource="Room"/>
+  <ex:hasConstraint rdf:resource="Noisy"/>
+  <ex:hasConstraint rdf:resource="Bright"/>
+  <ex:hasConstraint rdf:resource="Moving"/>
+  <ex:hasConstraint rdf:resource="Public"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="RestingRoom">
+  <rdf:type rdf:resource="Room"/>
+  <ex:hasConstraint rdf:resource="Calm"/>
+  <ex:hasConstraint rdf:resource="Dim"/>
+  <ex:hasConstraint rdf:resource="Private"/>
+  <ex:hasConstraint rdf:resource="Sitting"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="Bathroom">
+  <rdf:type rdf:resource="Room"/>
+  <ex:hasConstraint rdf:resource="Calm"/>
+  <ex:hasConstraint rdf:resource="Private"/>
+  <ex:hasConstraint rdf:resource="Dim"/>
+  <ex:hasConstraint rdf:resource="Sitting"/>
+  <ex:hasConstraint rdf:resource="Standing"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="Kitchen">
+  <rdf:type rdf:resource="Room"/>
+  <ex:hasConstraint rdf:resource="Bright"/>
+  <ex:hasConstraint rdf:resource="Standing"/>
+  <ex:hasConstraint rdf:resource="Noisy"/>
+  <ex:hasConstraint rdf:resource="Public"/>
+</rdf:Description>
+<!-- End Rooms -->
+
+<!-- Contraints -->
+<rdf:Description rdf:about="Sound">
+    <rdf:type rdf:resource="Constraint"/>  
+</rdf:Description>
+
+    <rdf:Description rdf:about="Calm">
+        <rdf:type rdf:resource="Sound"/>  
+    </rdf:Description>
+    <rdf:Description rdf:about="Noisy">
+        <rdf:type rdf:resource="Sound"/>  
+    </rdf:Description>
+    
+<rdf:Description rdf:about="Light">
+    <rdf:type rdf:resource="Constraint"/>  
+</rdf:Description>
+
+    <rdf:Description rdf:about="Bright">
+        <rdf:type rdf:resource="Light"/>  
+    </rdf:Description>
+    <rdf:Description rdf:about="Dim">
+        <rdf:type rdf:resource="Light"/>  
+    </rdf:Description>
+
+<rdf:Description rdf:about="Privacy">
+    <rdf:type rdf:resource="Constraint"/>  
+</rdf:Description>
+
+    <rdf:Description rdf:about="Public">
+        <rdf:type rdf:resource="Privacy"/>  
+    </rdf:Description>
+    <rdf:Description rdf:about="Private">
+        <rdf:type rdf:resource="Privacy"/>  
+    </rdf:Description>
+    
+<rdf:Description rdf:about="Movement">
+    <rdf:type rdf:resource="Constraint"/>  
+</rdf:Description>
+
+    <rdf:Description rdf:about="Moving">
+        <rdf:type rdf:resource="Movement"/>  
+    </rdf:Description>
+    <rdf:Description rdf:about="Standing">
+        <rdf:type rdf:resource="Movement"/>  
+    </rdf:Description>
+    <rdf:Description rdf:about="Sitting">
+        <rdf:type rdf:resource="Movement"/>  
+    </rdf:Description>
+<!-- End Contraints -->
+
+</rdf:RDF>
+  
