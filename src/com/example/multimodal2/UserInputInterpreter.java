@@ -3,6 +3,7 @@ package com.example.multimodal2;
 import java.util.Locale;
 
 import multimodal.FuzzyTime;
+import multimodal.schedule.Room;
 import android.annotation.SuppressLint;
 import android.util.Log;
 
@@ -13,11 +14,37 @@ public class UserInputInterpreter {
 	    public String time;
 	    FuzzyTime exactTime;	    
 	}
-
+	enum CommandType{
+	    DISPLAY, CANCEL, MOVE, BOOK, WHEN, WHERE, WHO
+	};
+	Room exactLocation;
+	FuzzyTime time;
+	CommandType command;
+	
+	@SuppressLint("DefaultLocale")
+	public UserInputInterpreter(String text) {
+		text = text.toLowerCase();		
+		try {
+			this.time = this.interpreteTime(text);
+		} catch (UserInputNotUnderstoodException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if(text.contains("when")) {
+			this.command = CommandType.WHEN;
+		} else if(text.matches("where")) {
+			this.command = CommandType.WHERE;
+		} else if(text.matches("show")) {
+			this.command = CommandType.DISPLAY;
+		} else if(text.matches("move")) {
+			this.command = CommandType.MOVE;
+		} else if(text.matches("cancel")) {
+			this.command = CommandType.CANCEL;
+		}
+	}
 
 	
-	
-	public static FuzzyTime interpreteTime(String time) {
+	private FuzzyTime interpreteTime(String time) throws UserInputNotUnderstoodException {
 		time = time.toLowerCase(Locale.getDefault());
 		if(time.contains("yesterday")){
 			return FuzzyTime.nowPlusSeconds(-24*60*60);
@@ -27,31 +54,12 @@ public class UserInputInterpreter {
 			return FuzzyTime.nowPlusSeconds(24*60*60);
 		} else if(time.equals("next")){
 			return FuzzyTime.now();
-		} else {
-			return null;
-			//throw new UserInputNotUnderstoodException("Time: "+time);
+		} else {			
+			throw new UserInputNotUnderstoodException("Time: "+time);
 		}
 	}
-	@SuppressLint("DefaultLocale")
-	public static void userSaid(String text) {
+	
 
-		text = text.toLowerCase();
-		FuzzyTime userTime;
-		userTime = interpreteTime(text);
-		UserAction returnObject;
-		if(text.contains("when")) {
-			//returnObject = UserAction(userTime );
-			UserInputInterpreter.userSaidWhen();
-		} else if(text.matches("where")) {
-			UserInputInterpreter.userSaidWhere();
-		} else if(text.matches("show")) {
-			UserInputInterpreter.userSaidShow();
-		} else if(text.matches("move")) {
-			UserInputInterpreter.userSaidMove();
-		} else if(text.matches("cancel")) {
-			UserInputInterpreter.userSaidCancel();
-		}		
-	}
 	
 	class UserInputNotUnderstoodException extends Exception{
 		UserInputNotUnderstoodException(String msg){
