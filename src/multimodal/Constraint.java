@@ -69,4 +69,10 @@ public class Constraint {
 	public long getDuration() {
 		return this.minimalDurationSec;
 	}
+
+	public Constraint fuzzyTimeConstrain(FuzzyTime ft) {
+		this.startTime = ft.startTime;
+		this.endTime = ft.endTime;
+		return this;
+	}
 }
