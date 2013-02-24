@@ -5,6 +5,10 @@ import java.util.Locale;
 import multimodal.FuzzyTime;
 import multimodal.schedule.Room;
 
+import android.annotation.SuppressLint;
+import android.util.Log;
+
+@SuppressLint("DefaultLocale")
 public class UserInputInterpreter {
 	public class UserInput{
 	    public CommandType commandType;
@@ -34,11 +38,45 @@ public class UserInputInterpreter {
 			throw new UserInputNotUnderstoodException("Time: "+time);
 		}
 	}
+	@SuppressLint("DefaultLocale")
+	public static void userSaid(String text) {
+
+		text = text.toLowerCase();
+		if(text.contains("when")) {
+			UserInputInterpreter.userSaidWhen();
+		} else if(text.matches("where")) {
+			UserInputInterpreter.userSaidWhere();
+		} else if(text.matches("show")) {
+			UserInputInterpreter.userSaidShow();
+		} else if(text.matches("move")) {
+			UserInputInterpreter.userSaidMove();
+		} else if(text.matches("cancel")) {
+			UserInputInterpreter.userSaidCancel();
+		}		
+	}
 	
 	class UserInputNotUnderstoodException extends Exception{
 		UserInputNotUnderstoodException(String msg){
 			super(msg);
 		}
+	public static void userSaidCancel() {
+		Log.d("SpeechRepeatActivity", "matched cancel!");
+	}
+
+	public static void userSaidMove() {
+		Log.d("SpeechRepeatActivity", "matched move!");	
+	}
+
+	public static void userSaidShow() {
+		Log.d("SpeechRepeatActivity", "matched show!");
+	}
+
+	public static void userSaidWhere() {
+		Log.d("SpeechRepeatActivity", "matched where!");
+	}
+
+	public static void userSaidWhen() {
+		Log.d("SpeechRepeatActivity", "matched when!");
 	}
 	
 }

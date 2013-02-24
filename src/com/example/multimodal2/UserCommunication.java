@@ -1,49 +1,29 @@
 package com.example.multimodal2;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.speech.tts.TextToSpeech;
-import android.util.Log;
 import android.widget.Toast;
 
-@SuppressLint("DefaultLocale")
 public class UserCommunication {
-	@SuppressLint("DefaultLocale")
-	public void userSaid(String text, Activity act, TextToSpeech repeatTTS) {
-		Toast.makeText(act, "You said: "+text, Toast.LENGTH_LONG).show();
-		repeatTTS.speak("You said: "+text, TextToSpeech.QUEUE_FLUSH, null);
-		text = text.toLowerCase();
-		if(text.contains("when")) {
-			this.userSaidWhen();
-		} else if(text.matches("where")) {
-			this.userSaidWhere();
-		} else if(text.matches("show")) {
-			this.userSaidShow();
-		} else if(text.matches("move")) {
-			this.userSaidMove();
-		} else if(text.matches("cancel")) {
-			this.userSaidCancel();
-		}		
+	Activity ma;
+	TextToSpeech tts;
+	public UserCommunication(Activity ma) {
+		this.ma = ma;
 	}
 	
-	private void userSaidCancel() {
-		Log.d("SpeechRepeatActivity", "matched cancel!");
+	public void InputFromUser(String text) {
+		Toast.makeText(this.ma, "You said: "+text, Toast.LENGTH_LONG).show();
+		if(this.tts != null) {
+			this.tts.speak("You said: "+text, TextToSpeech.QUEUE_FLUSH, null);
+		}
+		UserInputInterpreter.userSaid(text);
+		
 	}
 
-	private void userSaidMove() {
-		Log.d("SpeechRepeatActivity", "matched move!");	
+	public void updateTTS(TextToSpeech repeatTTS) {
+		this.tts = repeatTTS;
+		
 	}
-
-	private void userSaidShow() {
-		Log.d("SpeechRepeatActivity", "matched show!");
-	}
-
-	private void userSaidWhere() {
-		Log.d("SpeechRepeatActivity", "matched where!");
-	}
-
-	public void userSaidWhen() {
-		Log.d("SpeechRepeatActivity", "matched when!");
-	}
+	
 	
 }
