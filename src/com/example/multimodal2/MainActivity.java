@@ -24,12 +24,13 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 	private final String LOG_TAG = "SpeechRepeatActivity";
 	private int MY_DATA_CHECK_CODE = 0;
 	private TextToSpeech repeatTTS;
-	private UserCommunication uc = new UserCommunication();
+	private UserCommunication uc;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		uc = new UserCommunication(MainActivity.this);
 		Button speechBtn = (Button) findViewById(R.id.speech_btn);
 		PackageManager packManager = getPackageManager();
 		List<ResolveInfo> intActivities = packManager.queryIntentActivities(new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH), 0);
@@ -77,12 +78,13 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 		if (requestCode == VR_REQUEST && resultCode == RESULT_OK)
 		{
 			ArrayList<String> suggestedWords = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-			uc.userSaid(suggestedWords.get(0), MainActivity.this, repeatTTS);
+			uc.InputFromUser(suggestedWords.get(0));
 		} 
 		else if (requestCode == MY_DATA_CHECK_CODE)
 		{
 			if (resultCode == TextToSpeech.Engine.CHECK_VOICE_DATA_PASS) {
 				repeatTTS = new TextToSpeech(this, this);
+				uc.updateTTS(repeatTTS);
 			} 
 			else 
 			{
