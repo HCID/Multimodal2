@@ -26,24 +26,25 @@ public class UserCommunication {
 		}		
 	}
 	
-	private void userSaidCancel() {
+	public void userSaidCancel() {
 		Log.d("SpeechRepeatActivity", "matched cancel!");
 	}
 
-	private void userSaidMove() {
+	public void userSaidMove() {
 		Log.d("SpeechRepeatActivity", "matched move!");	
 	}
 
-	private void userSaidShow() {
+	public void userSaidShow() {
 		Log.d("SpeechRepeatActivity", "matched show!");
 	}
 
-	private void userSaidWhere() {
+	public void userSaidWhere() {
 		Log.d("SpeechRepeatActivity", "matched where!");
 	}
 
 	public void userSaidWhen() {
 		Log.d("SpeechRepeatActivity", "matched when!");
 	}
+	
 	
 }
