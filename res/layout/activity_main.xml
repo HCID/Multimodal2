@@ -19,13 +19,16 @@
 	        android:src="@drawable/last" />
 
 	    <Button
-	        android:id="@+id/currentMonth"
+	        android:id="@+id/currentWeek"
 	        android:layout_width="197dp"
 	        android:layout_height="match_parent"
 	        android:layout_weight="1.10"
 	        android:background="@drawable/year"
+	        android:clickable="false"
+	        android:text="Current Week"
 	        android:textAppearance="?android:attr/textAppearanceMedium"
-	        android:textColor="#FFFFFF" />
+	        android:textColor="#FFFFFF"
+	        android:textSize="30sp" />
 
 	    <ImageView
 	        android:id="@+id/nextMonth"
@@ -37,37 +40,73 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="bottom"
+        android:gravity="bottom|right"
         android:orientation="vertical" >
 
-        <ImageView
-            android:id="@+id/calendarheader"
-            android:layout_width="345dp"
-            android:layout_height="55dp"
-            android:layout_weight="10853.12"
-            android:src="@drawable/week" />
-
-        <GridView
-            android:id="@+id/calendar"
-            android:layout_width="fill_parent"
-            android:layout_height="328dp"
-            android:numColumns="7" >
-
-        </GridView>
+              <ImageView
+                  android:id="@+id/calendarheader"
+                  android:layout_width="324dp"
+                  android:layout_height="51dp"
+                  android:paddingRight="12dp"
+                  android:paddingTop="5dp"
+                  android:src="@drawable/week" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="46dp"
-            android:gravity="left" >
+            android:layout_height="385dp"
+            android:gravity="bottom|right|top" >
+
+            <GridView
+                android:id="@+id/timeline"
+                android:layout_width="33dp"
+                android:layout_height="match_parent"
+                android:numColumns="1" >
+            </GridView>
+
+            <GridView
+                android:id="@+id/calendar"
+                android:layout_width="296dp"
+                android:layout_height="395dp"
+                android:layout_weight="0.25"
+                android:numColumns="7" >
+            </GridView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="57dp"
+            android:gravity="bottom"
+            android:orientation="horizontal"
+            android:paddingBottom="3dp"
+            android:paddingTop="5dp" >
+
+            <Button
+                android:id="@+id/speech_btn"
+                android:layout_width="78dp"
+                android:layout_height="match_parent"
+                android:text="Speak" />
+
+            <Spinner
+                android:id="@+id/current_place"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:gravity="left"
+            android:paddingBottom="3dp" >
 
             <EditText
-                android:id="@+id/TypeEvent"
+                android:id="@+id/editText1"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="39dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3.05"
                 android:ems="10"
-                android:fitsSystemWindows="true"
-                android:hint="Type event" >
+                android:hint="Type the event" >
 
                 <requestFocus />
             </EditText>
@@ -76,28 +115,8 @@
                 android:id="@+id/button1"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="1.76"
+                android:hint="Type event"
                 android:text="@string/add_event" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="57dp"
-            android:layout_gravity="bottom"
-            android:gravity="bottom"
-            android:orientation="horizontal" >
-
-            <Spinner
-                android:id="@+id/spinner1"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="10853.12" />
-
-            <Button
-                android:id="@+id/speech_btn"
-                android:layout_width="78dp"
-                android:layout_height="match_parent"
-                android:text="Speak" />
 
         </LinearLayout>
 
