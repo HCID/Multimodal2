@@ -23,12 +23,13 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends Activity implements OnClickListener, OnInitListener {
 
 	private static final int VR_REQUEST = 999;
-	private final String LOG_TAG = "SpeechRepeatActivity";
+	final String LOG_TAG = "SpeechRepeatActivity";
 	private int MY_DATA_CHECK_CODE = 0;
 	private TextToSpeech repeatTTS;
 	private UserCommunication uc;
@@ -37,7 +38,7 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		uc = new UserCommunication(MainActivity.this);
+		uc = new UserCommunication(this);
 		Button speechBtn = (Button) findViewById(R.id.speech_btn);
 		PackageManager packManager = getPackageManager();
 		List<ResolveInfo> intActivities = packManager.queryIntentActivities(new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH), 0);
@@ -68,10 +69,8 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 
 			@Override
 			public void onItemSelected(AdapterView<?> arg0, View arg1,
-					int arg2, long arg3) {
-				
-				Log.d(LOG_TAG, arg1.getClass().toString());
-				//currentRoom
+					int arg2, long arg3) {				
+				currentRoom = ((TextView) arg1).getText().toString();
 				
 			}
 

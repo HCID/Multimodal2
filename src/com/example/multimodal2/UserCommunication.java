@@ -22,6 +22,7 @@ public class UserCommunication {
 	public UserCommunication(Activity ma) {
 		
 		this.ma = ma;
+		
 		this.rdfModel = new RDFModel(this.ma);		
 	}
 	
@@ -36,12 +37,12 @@ public class UserCommunication {
 		}
 		
 		Collection<Room> roomList= RoomFactory.createRoomsFromRDF(this.rdfModel.getModel());
-		String currentmRoom = "Bathroom";
 		Log.d(this.getClass().getSimpleName(), "Parsed "+roomList.size()+" rooms from RDF" );
 		for(Room room : roomList ) {
-			if(room.getName() == currentmRoom) {
-				HashMap<String, Integer> modalities = this.rdfModel.getModalityForRoom(room);
-			}
+			//if(room.getName() == this.ma) {
+			//	HashMap<String, Integer> modalities = this.rdfModel.getModalityForRoom(room);
+			//	Log.d("SpeechRepeatActivity", "we are in: " + room.getName());
+			//}
 		}
 		
 		//get some room
@@ -52,9 +53,9 @@ public class UserCommunication {
 		//constrain to meetings plus minus one hour
 		c.fuzzyTimeConstrain(new FuzzyTime(new Date(), deviation)); 
 		
-		LinkedList<Booking> possibleBookings = someRoom.getPossibleBookings(c);
-		Log.i(this.getClass().getSimpleName(), "Booking :"+possibleBookings.getFirst());
-		possibleBookings.getFirst().book();	
+//		LinkedList<Booking> possibleBookings = someRoom.getPossibleBookings(c);
+//		Log.i(this.getClass().getSimpleName(), "Booking :"+possibleBookings.getFirst());
+//		possibleBookings.getFirst().book();	
 		
 	}
 
