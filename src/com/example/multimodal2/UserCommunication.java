@@ -1,10 +1,12 @@
 package com.example.multimodal2;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 
 import multimodal.Constraint;
+import multimodal.FuzzyTime;
 import multimodal.RoomFactory;
 import multimodal.schedule.Booking;
 import multimodal.schedule.Room;
@@ -13,6 +15,7 @@ import android.speech.RecognizerIntent;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.TextToSpeech.OnUtteranceCompletedListener;
 import android.util.Log;
+import android.widget.Toast;
 
 public class UserCommunication {
 	
@@ -44,11 +47,33 @@ public class UserCommunication {
 		if(this.currentCommand == null) {
 			this.currentCommand = new UserInputInterpreter(text, roomList);
 		}
-		
+		if(currentCommand.command == UserInputInterpreter.CommandType.REMINDER) {
+			if(this.currentCommand.time != null){
+				final Date reminderTime = this.currentCommand.time.getExactStartTime();
+				final MainActivity mainActivity = this.ma;
+				new Thread(new Runnable() {
+					Date remindAtTime = reminderTime;
+					MainActivity activity = mainActivity;
+					@Override
+					public void run() {
+						while(remindAtTime.getTime()<new Date().getTime()){
+							try {
+								this.wait(1000, 0);
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							}
+						}
+						Toast.makeText(mainActivity, "============ WAKE UP! =========",Toast.LENGTH_LONG).show();
+						Log.e("REMINDER","============ WAKE UP! =========");
+					}
+				}).start();
+			}
+		} else
 		if(currentCommand.command == UserInputInterpreter.CommandType.WHEN) {
 		
 
-		} else if(currentCommand.command == UserInputInterpreter.CommandType.BOOK) {
+		} else 
+		if(currentCommand.command == UserInputInterpreter.CommandType.BOOK) {
 			if(this.confirm) {
 				if(text.contains("yes")) {
 					Log.d("SpeechRepeatActivity", "booked");

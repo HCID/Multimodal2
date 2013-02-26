@@ -59,5 +59,9 @@ public class FuzzyTime implements Cloneable{
 	public long getCenterDeviation() {
 		return this.durationSeconds+this.deviationSeconds;
 	}
+
+	public Date getExactStartTime() {
+		return (Date)this.startTime.clone();
+	}
 	
 }
