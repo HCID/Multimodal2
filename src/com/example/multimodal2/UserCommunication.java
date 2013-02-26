@@ -20,19 +20,21 @@ public class UserCommunication {
 	private static final String OUTPUT_TYPE_YES_NO_QUESTION = "http://imi.org/YesNoQuestion";
 	private static final String OUTPUT_TYPE_REMINDER = "http://imi.org/Reminder";
 	MainActivity ma;
-	TextToSpeech tts;
-	RDFModel rdfModel;
+	
 	private LinkedList<Room> roomList;
 	public String currentRoom;
 	private boolean confirm;
 	private UserInputInterpreter currentCommand;
 	HashMap<String, Integer> modalities;
+	public enum typeOfQuestion {
+		CONFIRM 
+	};
 	public UserCommunication(MainActivity ma) {
 		
 		this.ma = ma;
 		
-		this.rdfModel = new RDFModel(this.ma);		
-		roomList= RoomFactory.createRoomsFromRDF(this.rdfModel.getModel());
+			
+		roomList= RoomFactory.createRoomsFromRDF(this.ma.rdfModel.getModel());
 	}
 	
 	public void InputFromUser(String text) {
@@ -73,27 +75,9 @@ public class UserCommunication {
 				}
 				LinkedList<Booking> possibleBookings = associatedRoom.getPossibleBookings(constr);
 				Booking b = possibleBookings.getFirst();
-				String msg = "Do you want to book a meeting in the "+associatedRoom.getSpeechName()+b.getSpeechStartTime()+"?";
-				this.tts.setOnUtteranceCompletedListener(new OnUtteranceCompletedListener() {
-
-			        @Override
-			        public void onUtteranceCompleted(String utteranceId) {
-			        	Log.d("SpeechRepeatActivity", "123");
-			        	askForUserSpeechInput();
-			            
-			        }
-			    });
-				
-				HashMap<String, String> myHashAlarm = new HashMap<String, String>();
-				myHashAlarm.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, "SOME MESSAGE");
-				this.tts.speak(msg, TextToSpeech.QUEUE_FLUSH, myHashAlarm);
 				
 				
-				
-					
-					this.confirm = true;
-					
-					
+				askUser("Do you want to book a meeting in the "+associatedRoom.getSpeechName()+b.getSpeechStartTime()+"?", typeOfQuestion.CONFIRM);	
 				}
 			}
 		}
@@ -111,11 +95,6 @@ public class UserCommunication {
 //		possibleBookings.getFirst().book();	
 		
 
-	public void updateTTS(TextToSpeech repeatTTS) {
-		this.tts = repeatTTS;
-		
-	}
-	
 	
 	public void updateRoom(String cRoom) {
 		this.currentRoom = cRoom;
@@ -124,11 +103,25 @@ public class UserCommunication {
 		for(Room room : this.roomList ) {
 			Log.d("SpeechRepeatActivity", "is: " + room.getName() + " and " + cRoom + " the same thing?");
 			if(room.getName().equals(currentRoom)) {
-				modalities = this.rdfModel.getModalityForRoom(room, OUTPUT_TYPE_QUESTION);				
+				modalities = this.ma.rdfModel.getModalityForRoom(room);				
 				break;
 			}
-		}
-		//Log.d("SpeechRepeatActivity", "we are in: " + modalities.);
+		}		
+	}
+	
+	public void askUser(String msg, typeOfQuestion type) {
+		this.ma.repeatTTS.setOnUtteranceCompletedListener(new OnUtteranceCompletedListener() {
+	        @Override
+	        public void onUtteranceCompleted(String utteranceId) {
+	        	Log.d("SpeechRepeatActivity", "123");
+	        	askForUserSpeechInput();
+	            
+	        }
+	    });
+		HashMap<String, String> myHashAlarm = new HashMap<String, String>();
+		myHashAlarm.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, "SOME MESSAGE");
+		this.ma.repeatTTS.speak(msg, TextToSpeech.QUEUE_FLUSH, myHashAlarm);
+		this.confirm = true;
 	}
 	
 	
