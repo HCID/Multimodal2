@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/bg"
+    android:gravity="center_horizontal|top"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/bookinginfo"
+        android:layout_width="329dp"
+        android:layout_height="41dp"
+        android:layout_marginTop="27dp"
+        android:text="Booking information:"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textSize="30sp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <AutoCompleteTextView
+            android:id="@+id/confirmationroom"
+            android:layout_width="278dp"
+            android:layout_height="57dp"
+            android:layout_marginBottom="46dp"
+            android:background="@drawable/bg"
+            android:ems="10"
+            android:text="Room:"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textSize="25dp" />
+		
+        <AutoCompleteTextView
+            android:id="@+id/start_time"
+            android:layout_width="278dp"
+            android:layout_height="57dp"
+            android:layout_marginBottom="46dp"
+            android:background="@drawable/bg"
+            android:ems="10"
+            android:text="Start Time:"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textSize="25dp" >
+
+            <requestFocus />
+        </AutoCompleteTextView>
+
+        <AutoCompleteTextView
+            android:id="@+id/end_time"
+            android:layout_width="278dp"
+            android:layout_height="57dp"
+            android:layout_marginBottom="46dp"
+            android:background="@drawable/bg"
+            android:ems="10"
+            android:text="End Time:"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textSize="25dp" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/confirmationmessage"
+        android:layout_width="331dp"
+        android:layout_height="101dp"
+        android:text="Do you want to confirm this booking?"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textSize="30dp" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="233dp"
+        android:layout_height="241dp"
+        android:layout_marginBottom="23dp"
+        android:layout_marginLeft="25dp"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:paddingRight="50dp" >
+
+        <Button
+            android:id="@+id/confirmyes"
+            android:layout_width="54dp"
+            android:layout_height="60dp"
+            android:layout_weight="0.07"
+            android:text="Yes" />
+
+        <Button
+            android:id="@+id/confirmno"
+            android:layout_width="54dp"
+            android:layout_height="60dp"
+            android:layout_weight="0.07"
+            android:text="No" />
+    </LinearLayout>
+
+</LinearLayout>
