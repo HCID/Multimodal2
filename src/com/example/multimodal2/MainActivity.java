@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import multimodal.RoomFactory;
+import multimodal.schedule.Room;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -12,10 +14,15 @@ import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.TextToSpeech.OnInitListener;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 public class MainActivity extends Activity implements OnClickListener, OnInitListener {
@@ -25,7 +32,7 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 	private int MY_DATA_CHECK_CODE = 0;
 	private TextToSpeech repeatTTS;
 	private UserCommunication uc;
-
+	protected String currentRoom;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -45,6 +52,38 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 		Intent checkTTSIntent = new Intent();
 		checkTTSIntent.setAction(TextToSpeech.Engine.ACTION_CHECK_TTS_DATA);
 		startActivityForResult(checkTTSIntent, MY_DATA_CHECK_CODE);
+		
+		Spinner spinner = (Spinner) findViewById(R.id.current_place);
+		RDFModel rdfModel = new RDFModel(this);	
+		
+		
+		ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item);
+		for(Room room : RoomFactory.createRoomsFromRDF(rdfModel.getModel()) ) {
+			spinnerArrayAdapter.add(room.getName());
+		}
+		
+		spinner.setAdapter(spinnerArrayAdapter);
+		
+		spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			@Override
+			public void onItemSelected(AdapterView<?> arg0, View arg1,
+					int arg2, long arg3) {
+				
+				Log.d(LOG_TAG, arg1.getClass().toString());
+				//currentRoom
+				
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+		
+		
 	}
 
 	@Override
@@ -57,7 +96,6 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 	public void onInit(int arg0) {
 		if (arg0 == TextToSpeech.SUCCESS)
 			repeatTTS.setLanguage(Locale.UK);
-
 	}
 
 	@Override
