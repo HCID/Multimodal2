@@ -77,8 +77,8 @@ public class UserInputInterpreter {
 			int timeAdd = timeUnitMultiplier.get("days")*2;
 			return FuzzyTime.nowPlusSeconds(timeAdd);
 		} else if(time.contains("tomorrow")){
-			int timeAdd = timeUnitMultiplier.get("days")*2;
-			return FuzzyTime.nowPlusSeconds(24*60*60);
+			int timeAdd = timeUnitMultiplier.get("days");
+			return FuzzyTime.nowPlusSeconds(timeAdd);
 		} else if(time.equals("next")){
 			return FuzzyTime.now();
 		} else {			
