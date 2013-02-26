@@ -176,6 +176,7 @@ public class UserCommunication {
 			outputToUserByVoice(msg);
 		} else if(preferredModality.equals(MODALITY_SCREEN)) {
 			if(type == OUTPUT_TYPE_YES_NO_QUESTION) {
+				Log.d("aa", "adsadsad");
 				Intent i = new Intent(this.ma, MeetingConfirmation.class);		
 				i.putExtra("booking", currentBooking);
 				this.ma.startActivityForResult(i,3); 
@@ -184,6 +185,13 @@ public class UserCommunication {
 		} else if(preferredModality.equals(MODALITY_TACTILE)){
 			Vibrator v = (Vibrator) this.ma.getSystemService(Context.VIBRATOR_SERVICE);
 			v.vibrate(1000);
+			this.confirm = false;
+			this.currentCommand = null;
+			this.currentBooking = null;
+		} else {
+			this.confirm = false;
+			this.currentCommand = null;
+			this.currentBooking = null;
 		}
 	}
 	
