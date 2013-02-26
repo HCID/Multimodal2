@@ -33,13 +33,17 @@ public class UserInputInterpreter {
 		
 		if(text.contains("when")) {
 			this.command = CommandType.WHEN;
-		} else if(text.matches("where")) {
+		} else if(text.contains("where")) {
 			this.command = CommandType.WHERE;
-		} else if(text.matches("show")) {
+		} else if(text.contains("show")) {
 			this.command = CommandType.DISPLAY;
-		} else if(text.matches("move")) {
+		} else if(text.contains("move")) {
 			this.command = CommandType.MOVE;
-		} else if(text.matches("cancel")) {
+		} else if(text.contains("cancel")) {
+			this.command = CommandType.CANCEL;
+		} else if(text.contains("book")) {
+			this.command = CommandType.CANCEL;
+		} else if(text.contains("who")) {
 			this.command = CommandType.CANCEL;
 		}
 	}
