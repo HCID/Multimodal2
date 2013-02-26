@@ -6,7 +6,6 @@ import java.util.LinkedList;
 import java.util.Map;
 
 import multimodal.Constraint;
-import multimodal.FuzzyTime;
 import multimodal.RoomFactory;
 import multimodal.schedule.Booking;
 import multimodal.schedule.Room;
@@ -164,7 +163,7 @@ public class UserCommunication {
 				//this.ma.setContentView(R.layout.bookingconfirmation);
 				Intent i = new Intent(this.ma, MeetingConfirmation.class);		
 				i.putExtra("booking", currentBooking);
-				this.ma.startActivityForResult(i,0); 
+				this.ma.startActivityForResult(i,3); 
 				//this.ma.startActivity(new Intent("android.intent.action.CONFIRM"));
 				this.confirm = true;
 			}			
@@ -190,6 +189,7 @@ public class UserCommunication {
 		listenIntent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1);
 		this.ma.startActivityForResult(listenIntent, this.ma.VR_REQUEST);
 	}
+
 	
 	
 }

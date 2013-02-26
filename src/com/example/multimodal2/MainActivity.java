@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.TextToSpeech.OnInitListener;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -124,8 +125,15 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 				installTTSIntent.setAction(TextToSpeech.Engine.ACTION_INSTALL_TTS_DATA);
 				startActivity(installTTSIntent);
 			}
+		} else if(requestCode == 3 && resultCode == RESULT_OK) {
+			Log.d("aa", "ya222yy");
+		} else if(requestCode == 3 && resultCode == RESULT_CANCELED) {
+			Log.d("aa", "ya222yy");
 		}
+		Log.d("aa", "yayy" + requestCode + "--- " + resultCode);
+		
 		super.onActivityResult(requestCode, resultCode, data);
 	}
+	
 
 }
