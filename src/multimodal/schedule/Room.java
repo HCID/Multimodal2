@@ -21,6 +21,7 @@ public class Room {
 	private String name;
 	private Schedule schedule;
 	private String uri;
+	private LinkedList<String> aliases = new LinkedList<String>();
 	public Room(String uri, String name, Property ...props){
 		this(uri, name);
 		this.properties.addAll(Arrays.asList(props));
@@ -81,5 +82,21 @@ public class Room {
 
 	public String getURI() {
 		return this.uri;
+	}
+
+	public Room setAliases(LinkedList<String> aliases) {
+		this.aliases  = aliases;
+		return this;
+	}
+
+	public LinkedList<String> getAliases() {
+		return this.aliases;
+	}
+
+	public String getSpeechName() {
+		if(this.aliases.size()>0){
+			return this.aliases.getFirst();
+		}
+		return this.name;
 	}
 }

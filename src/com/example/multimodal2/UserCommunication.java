@@ -19,13 +19,14 @@ public class UserCommunication {
 	Activity ma;
 	TextToSpeech tts;
 	RDFModel rdfModel;
-	private Collection<Room> roomList;
+	private LinkedList<Room> roomList;
 	public String currentRoom;
 	public UserCommunication(Activity ma) {
 		roomList= RoomFactory.createRoomsFromRDF(this.rdfModel.getModel());
 		this.ma = ma;
 		
-		this.rdfModel = new RDFModel(this.ma);		
+		this.rdfModel = new RDFModel(this.ma);
+		
 	}
 	
 	public void InputFromUser(String text) {
@@ -33,26 +34,30 @@ public class UserCommunication {
 		if(this.tts != null) {
 			this.tts.speak("You said: "+text, TextToSpeech.QUEUE_FLUSH, null);
 		}
-		UserInputInterpreter uii = new UserInputInterpreter(text);
+		UserInputInterpreter uii = new UserInputInterpreter(text, roomList);
 		if(uii.command == UserInputInterpreter.CommandType.WHEN) {
 		
 
 		} else if(uii.command == UserInputInterpreter.CommandType.BOOK) {
-			Room bestRoom = null;
-			for(Room room : roomList ) {
-				//TODO constrain rooms based on RDF
-				bestRoom = room;
-			}
-			if(bestRoom!=null){
-				Constraint constr = new Constraint();
-				if(uii.time != null){
-					constr.fuzzyTimeConstrain(uii.time);
+			Room associatedRoom = null;
+			if(uii.associatedRoom != null){
+				associatedRoom = uii.associatedRoom;
+			} else {
+				for(Room room : roomList ) {
+					//TODO constrain rooms based on RDF
+					associatedRoom = room;
 				}
-				LinkedList<Booking> possibleBookings = bestRoom.getPossibleBookings(constr);
-				Booking b = possibleBookings.getFirst();
-				String msg = "Do you want to book a meeting in the "+bestRoom.getName()+b.getSpeechStartTime()+"?";
-				this.tts.speak(msg, TextToSpeech.QUEUE_FLUSH, null);
 			}
+
+			Constraint constr = new Constraint();
+			if(uii.time != null){
+				constr.fuzzyTimeConstrain(uii.time);
+			}
+			LinkedList<Booking> possibleBookings = associatedRoom.getPossibleBookings(constr);
+			Booking b = possibleBookings.getFirst();
+			String msg = "Do you want to book a meeting in the "+associatedRoom.getSpeechName()+b.getSpeechStartTime()+"?";
+			this.tts.speak(msg, TextToSpeech.QUEUE_FLUSH, null);
+
 
 		}
 		Collection<Room> roomList= RoomFactory.createRoomsFromRDF(this.rdfModel.getModel());

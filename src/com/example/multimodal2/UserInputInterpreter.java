@@ -2,6 +2,7 @@ package com.example.multimodal2;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -18,18 +19,20 @@ public class UserInputInterpreter {
 	   // public CommandType commandType;
 	    public String time;
 	    FuzzyTime exactTime;	    
-	}
+	   }
 	public enum CommandType{
 	    DISPLAY, CANCEL, MOVE, BOOK, WHEN, WHERE, WHO
 	};
 	Room exactLocation;
 	FuzzyTime time;
 	CommandType command;
+	Room associatedRoom;
 	
 	@SuppressLint("DefaultLocale")
-	public UserInputInterpreter(String text) {
+	public UserInputInterpreter(String text, LinkedList<Room> allRooms) {
 		text = text.toLowerCase();		
 		this.time = this.interpreteTime(text);
+		this.associatedRoom = this.interpreteRoom(text, allRooms);
 		
 		if(text.contains("when")) {
 			this.command = CommandType.WHEN;
@@ -46,6 +49,20 @@ public class UserInputInterpreter {
 		} else if(text.contains("who")) {
 			this.command = CommandType.CANCEL;
 		}
+	}
+
+	private Room interpreteRoom(String text, LinkedList<Room> allRooms) {
+		for(Room r : allRooms){
+			if(text.contains(r.getName())){
+				return r;
+			}
+			for(String alias : r.getAliases()){
+				if(text.contains(alias)){
+					return r;
+				}
+			}
+		}
+		return null;
 	}
 
 	private static Map<String, Integer> timeUnitMultiplier;
