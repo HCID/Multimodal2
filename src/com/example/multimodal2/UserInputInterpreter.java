@@ -72,7 +72,7 @@ public class UserInputInterpreter {
     static {
     	timeUnitMultiplier = new HashMap<String, Integer>();
     	timeUnitMultiplier.put("a.m.", 0);
-    	timeUnitMultiplier.put("p.m.", 60*60*6);
+    	timeUnitMultiplier.put("p.m.", 60*60*12);
     	timeUnitMultiplier.put("o'clock", 0);
     	timeUnitMultiplier.put("hours", 60*60);
     	timeUnitMultiplier.put("hour", 60*60);
@@ -88,7 +88,6 @@ public class UserInputInterpreter {
     }
 	
 	private  FuzzyTime interpreteTime(String text){
-		System.out.println(text);
 		FuzzyTime fuztime = interpreteTimeInFuture(text);
 		if(fuztime != null){
 			return fuztime;
@@ -152,10 +151,12 @@ public class UserInputInterpreter {
 		Pattern datePatt = Pattern.compile(".*?in (\\d+) (seconds?|hours?|minutes?|days?|months?).*");
 		Matcher m = datePatt.matcher(time);
 		if (m.matches()) {
-			if(m.groupCount()<3){
+			if(m.groupCount()<2){
 				Log.e(this.getClass().getSimpleName(), "Error, not enough regex groups found in string: "+time);
+				for(int i=0; i<m.groupCount()+1; i++){
+					System.out.println(m.group(i));
+				}
 			}
-			Log.i(this.getClass().getSimpleName(), "Failed parsing number "+m.group(1));
 			try{
 				Integer baseNumber = Integer.parseInt(m.group(1));
 				if(timeUnitMultiplier.containsKey(m.group(2))){
