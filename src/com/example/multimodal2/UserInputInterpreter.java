@@ -21,7 +21,7 @@ public class UserInputInterpreter {
 	    FuzzyTime exactTime;	    
 	   }
 	public enum CommandType{
-	    DISPLAY, CANCEL, MOVE, BOOK, WHEN, WHERE, WHO
+	    DISPLAY, CANCEL, MOVE, BOOK, WHEN, WHERE, WHO, REMINDER
 	};
 	Room exactLocation;
 	FuzzyTime time;
@@ -48,6 +48,8 @@ public class UserInputInterpreter {
 			this.command = CommandType.BOOK;
 		} else if(text.contains("who")) {
 			this.command = CommandType.WHO;
+		} else if(text.contains("remind")) {
+			this.command = CommandType.REMINDER;
 		}
 	}
 
