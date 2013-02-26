@@ -87,7 +87,7 @@ public class UserCommunication {
 			if(this.confirm) {
 				if(text.contains("yes")) {
 					currentBooking.book();
-					Log.d("aa", "Hapilly booked");
+					Toast.makeText(this.ma, "Booked!", Toast.LENGTH_LONG).show();
 				}
 				this.confirm = false;
 				this.currentCommand = null;
@@ -191,11 +191,4 @@ public class UserCommunication {
 		this.ma.startActivityForResult(listenIntent, this.ma.VR_REQUEST);
 	}
 
-	public void confirm(boolean b) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	
-	
 }
