@@ -77,7 +77,7 @@ public class UserCommunication {
 				Booking b = possibleBookings.getFirst();
 				
 		
-				outputToUser("Do you want to book a meeting in the "+associatedRoom.getSpeechName()+b.getSpeechStartTime()+"?", typeOfQuestion.CONFIRM);	
+				outputToUser("Do you want to book a meeting in the "+associatedRoom.getSpeechName()+b.getSpeechStartTime()+"?", typeOfOutput.QUESTION);	
 				}
 			}
 		}
@@ -103,7 +103,7 @@ public class UserCommunication {
 		for(Room room : this.roomList ) {
 			Log.d("SpeechRepeatActivity", "is: " + room.getName() + " and " + cRoom + " the same thing?");
 			if(room.getName().equals(currentRoom)) {
-				modalities = this.ma.rdfModel.getModalityForRoom(room);				
+				modalities = this.ma.rdfModel.getModalityForRoom(room, OUTPUT_TYPE_QUESTION);				
 				break;
 			}
 		}		
