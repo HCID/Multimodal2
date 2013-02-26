@@ -81,9 +81,8 @@
       <ex:hasConstraint rdf:resource="Moving"/>
       <ex:hasConstraint rdf:resource="Sitting"/>
       <ex:hasConstraint rdf:resource="Standing"/>
-      <!--
       <ex:hasConstraint rdf:resource="Greasy"/>
-      -->
+
     </rdf:Description>
     
     <rdf:Description rdf:about="Screen">
@@ -181,14 +180,14 @@
 <!-- End Rooms -->
 
 <!-- Contraints -->
-<!--
+
 <rdf:Description rdf:about="Hygene">
     <rdf:type rdf:resource="Constraint"/>  
 </rdf:Description>
 	<rdf:Description rdf:about="Greasy">
         <rdf:type rdf:resource="Hygene"/>  
     </rdf:Description>
- -->
+
 
 <rdf:Description rdf:about="Sound">
     <rdf:type rdf:resource="Constraint"/>  

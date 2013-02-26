@@ -19,9 +19,9 @@ import android.widget.Toast;
 
 public class UserCommunication {
 	
-	private static final String OUTPUT_TYPE_QUESTION = "http://imi.org/Question";
 	@SuppressWarnings("unused")
 	private static final String OUTPUT_TYPE_STATEMENT = "http://imi.org/Statement";
+	private static final String OUTPUT_TYPE_QUESTION = "http://imi.org/Question";
 	private static final String OUTPUT_TYPE_YES_NO_QUESTION = "http://imi.org/YesNoQuestion";
 	private static final String OUTPUT_TYPE_REMINDER = "http://imi.org/Reminder";
 	
