@@ -13,6 +13,7 @@ import android.speech.RecognizerIntent;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.TextToSpeech.OnUtteranceCompletedListener;
 import android.util.Log;
+import android.widget.Toast;
 
 public class UserCommunication {
 	
@@ -20,11 +21,19 @@ public class UserCommunication {
 	private static final String OUTPUT_TYPE_STATEMENT = "http://imi.org/Statement";
 	private static final String OUTPUT_TYPE_YES_NO_QUESTION = "http://imi.org/YesNoQuestion";
 	private static final String OUTPUT_TYPE_REMINDER = "http://imi.org/Reminder";
-	MainActivity ma;
+	
+	private static final String MODALITY_SPEECH = "http://imi.org/Speech";	
+	private static final String MODALITY_TACTILE = "http://imi.org/Tactile";
+	private static final String MODALITY_MUSIC = "http://imi.org/Music";
+	private static final String MODALITY_LIGHT = "http://imi.org/Light";
+	private static final String MODALITY_SCREEN = "http://imi.org/Screen";
+	
+	private MainActivity ma;
 	
 	private LinkedList<Room> roomList;
 	public String currentRoom;
 	private boolean confirm;
+	private Booking currentBooking;
 	private UserInputInterpreter currentCommand;
 
 	public UserCommunication(MainActivity ma) {
@@ -51,10 +60,11 @@ public class UserCommunication {
 		} else if(currentCommand.command == UserInputInterpreter.CommandType.BOOK) {
 			if(this.confirm) {
 				if(text.contains("yes")) {
-					Log.d("SpeechRepeatActivity", "booked");
+					currentBooking.book();
 				}
 				this.confirm = false;
 				this.currentCommand = null;
+				this.currentBooking = null;
 			} else {
 				
 				Room associatedRoom = null;
@@ -72,10 +82,10 @@ public class UserCommunication {
 					constr.fuzzyTimeConstrain(currentCommand.time);
 				}
 				LinkedList<Booking> possibleBookings = associatedRoom.getPossibleBookings(constr);
-				Booking b = possibleBookings.getFirst();
+				currentBooking = possibleBookings.getFirst();
 				
 		
-				outputToUser("Do you want to book a meeting in the "+associatedRoom.getSpeechName()+b.getSpeechStartTime()+"?", OUTPUT_TYPE_YES_NO_QUESTION);	
+				outputToUser("Do you want to book a meeting in the "+associatedRoom.getSpeechName()+currentBooking.getSpeechStartTime()+"?", OUTPUT_TYPE_YES_NO_QUESTION);	
 				}
 			}
 		}
@@ -110,8 +120,10 @@ public class UserCommunication {
 			if(mod.getValue() > modalityVal) {
 				modality = mod.getKey();
 				modalityVal = mod.getValue();
+				Log.d(this.ma.LOG_TAG, "maybe: " + mod.getKey());
 			}
 		}
+		Log.d(this.ma.LOG_TAG, "chosen: " + modality);
 		return modality;
 	}
 	
@@ -120,7 +132,7 @@ public class UserCommunication {
 	}
 	
 	public void outputToUser(String msg, String type) {
-		if(getModalitiesForRoom(type).equals("Speech")) {
+		if(getModalitiesForRoom(type).equals(MODALITY_SPEECH)) {
 			if(type == OUTPUT_TYPE_YES_NO_QUESTION) {
 				this.ma.repeatTTS.setOnUtteranceCompletedListener(new OnUtteranceCompletedListener() {
 			        @Override
@@ -139,6 +151,7 @@ public class UserCommunication {
 		HashMap<String, String> myHashAlarm = new HashMap<String, String>();
 		myHashAlarm.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, "SOME MESSAGE");
 		this.ma.repeatTTS.speak(msg, TextToSpeech.QUEUE_FLUSH, myHashAlarm);
+		Toast.makeText(this.ma, msg, Toast.LENGTH_LONG).show();
 	}
 	
 	
