@@ -29,12 +29,8 @@ public class UserInputInterpreter {
 	@SuppressLint("DefaultLocale")
 	public UserInputInterpreter(String text) {
 		text = text.toLowerCase();		
-		try {
-			this.time = this.interpreteTime(text);
-		} catch (UserInputNotUnderstoodException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		this.time = this.interpreteTime(text);
+		
 		if(text.contains("when")) {
 			this.command = CommandType.WHEN;
 		} else if(text.matches("where")) {
@@ -52,7 +48,7 @@ public class UserInputInterpreter {
     static {
     	timeUnitMultiplier = new HashMap<String, Integer>();
     	timeUnitMultiplier.put("a.m.", 0);
-    	timeUnitMultiplier.put("p.m", 60*60*12);
+    	timeUnitMultiplier.put("p.m.", 60*60*12);
     	timeUnitMultiplier.put("o'clock", 0);
     	timeUnitMultiplier.put("hours", 60*60);
     	timeUnitMultiplier.put("minutes", 60);
@@ -61,47 +57,61 @@ public class UserInputInterpreter {
     	timeUnitMultiplier = Collections.unmodifiableMap(timeUnitMultiplier);
     }
 	
-	private FuzzyTime interpreteTime(String time) throws UserInputNotUnderstoodException {
-		FuzzyTime fuztime = interpreteTimeInFuture(time);
+	private  FuzzyTime interpreteTime(String text){
+		System.out.println(text);
+		FuzzyTime fuztime = interpreteTimeInFuture(text);
 		if(fuztime != null){
 			return fuztime;
 		}
-		fuztime = interpreteExactTime(time);
+		fuztime = interpreteExactTime(text);
 		if(fuztime != null){
 			return fuztime;
 		}
 	
-		if(time.contains("yesterday")){
+		if(text.contains("yesterday")){
 			return FuzzyTime.nowPlusSeconds(-24*60*60);
-		} else if(time.contains("day after tomorrow")){
+		} else if(text.contains("day after tomorrow")){
 			int timeAdd = timeUnitMultiplier.get("days")*2;
 			return FuzzyTime.nowPlusSeconds(timeAdd);
-		} else if(time.contains("tomorrow")){
+		} else if(text.contains("tomorrow")){
 			int timeAdd = timeUnitMultiplier.get("days");
 			return FuzzyTime.nowPlusSeconds(timeAdd);
-		} else if(time.equals("next")){
+		} else if(text.contains("next")){
 			return FuzzyTime.now();
 		} else {			
-			throw new UserInputNotUnderstoodException("Time: "+time);
+			System.out.println("not understood!");
 		}
+		return null;
 	}
-	
 	private FuzzyTime interpreteExactTime(String time) {
 		time = time.toLowerCase(Locale.getDefault());
-		Pattern datePatt = Pattern.compile("at (\\d+) (p\\.m\\.|a\\.m\\.|o'clock)");
+		int addTime = 0;
+		if(time.contains("tomorrow")){
+			addTime = timeUnitMultiplier.get("days");
+		}
+		if(time.contains("day after tomorrow")){
+			addTime = timeUnitMultiplier.get("days")*2;
+		}
+		if(time.contains("yesterday")){
+			addTime = -timeUnitMultiplier.get("days");
+		}
+		if(time.contains("day before yesterday")){
+			addTime = -timeUnitMultiplier.get("days");
+		}
+		Pattern datePatt = Pattern.compile(".*?at (\\d+) (p[.]m[.]|a\\.m\\.|o'clock).*");
 		Matcher m = datePatt.matcher(time);
 		if (m.matches()){
-			if( m.groupCount() == 2 && timeUnitMultiplier.containsKey(m.group(1))){
+			if( m.groupCount() == 2 && timeUnitMultiplier.containsKey(m.group(2))){
 				try{
-					int hours = Integer.parseInt(m.group(0));
-					return FuzzyTime.nowPlusSeconds(timeUnitMultiplier.get("hours")*hours*timeUnitMultiplier.get(m.group(1)));
+					int hours = Integer.parseInt(m.group(1));
+					return FuzzyTime.todayPlusSeconds(timeUnitMultiplier.get("hours")*hours+timeUnitMultiplier.get(m.group(2))+addTime);
 				} catch(NumberFormatException e){
-					Log.e(this.getClass().getSimpleName(), "error parsing time number "+m.group(0));
+					Log.e(this.getClass().getSimpleName(), "error parsing time number "+m.group(1));
 				} catch(NullPointerException e){
-					Log.e(this.getClass().getSimpleName(), "no such time unit "+m.group(1));
+					Log.e(this.getClass().getSimpleName(), "no such time unit "+m.group(2));
 				}
 			} else {
-				Log.e(this.getClass().getSimpleName(),"cannot match exact time, no such timeMultiplier!");
+				Log.e(this.getClass().getSimpleName(),"cannot match exact time, no such timeMultiplier! '"+m.group(2)+"'");
 			}
 		}
 		return null;
@@ -109,7 +119,7 @@ public class UserInputInterpreter {
 
 	private FuzzyTime interpreteTimeInFuture(String time){
 		time = time.toLowerCase(Locale.getDefault());
-		Pattern datePatt = Pattern.compile("in (\\d+) (hours|minutes|days|months)");
+		Pattern datePatt = Pattern.compile(".*?in (\\d+) (hours|minutes|days|months).*");
 		Matcher m = datePatt.matcher(time);
 		if (m.matches()) {
 			if(m.groupCount()<3){

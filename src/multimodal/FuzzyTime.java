@@ -1,5 +1,7 @@
 package multimodal;
 
+import FuzzyTime;
+
 import java.util.Date;
 
 public class FuzzyTime implements Cloneable{
@@ -42,7 +44,11 @@ public class FuzzyTime implements Cloneable{
 		Date now = new Date();
 		return new FuzzyTime(new Date(now.getTime()+seconds*1000));
 	}
-	
+	public static FuzzyTime todayPlusSeconds(long seconds) {
+		Date now = new Date();
+		Date today = new Date(now.getYear(),now.getMonth(),now.getDate());
+		return new FuzzyTime(new Date(today.getTime()+seconds*1000));
+	}
 	@Override
 	protected Object clone() throws CloneNotSupportedException {
 		return new FuzzyTime((Date)this.startTime.clone(), (Date)this.endTime.clone(), this.deviationSeconds);
