@@ -10,7 +10,9 @@ import multimodal.FuzzyTime;
 import multimodal.RoomFactory;
 import multimodal.schedule.Booking;
 import multimodal.schedule.Room;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Vibrator;
 import android.speech.RecognizerIntent;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.TextToSpeech.OnUtteranceCompletedListener;
@@ -73,8 +75,7 @@ public class UserCommunication {
 								}	
 							}
 						}
-						Toast.makeText(activity, "============ WAKE UP! =========",Toast.LENGTH_LONG).show();
-						Log.e("REMINDER","============ WAKE UP! =========");
+						outputToUser("WAKE UP! THIS IS A REMINDER!", OUTPUT_TYPE_REMINDER);
 					}
 				});
 			}
@@ -145,7 +146,8 @@ public class UserCommunication {
 	}
 	
 	public void outputToUser(String msg, String type) {
-		if(getModalitiesForRoom(type).equals(MODALITY_SPEECH)) {
+		String preferredModality = getModalitiesForRoom(type);
+		if(preferredModality.equals(MODALITY_SPEECH)) {
 			if(type == OUTPUT_TYPE_YES_NO_QUESTION) {
 				this.ma.repeatTTS.setOnUtteranceCompletedListener(new OnUtteranceCompletedListener() {
 			        @Override
@@ -157,7 +159,7 @@ public class UserCommunication {
 				this.confirm = true;
 			}	
 			outputToUserByVoice(msg);
-		} else if(getModalitiesForRoom(type).equals(MODALITY_SCREEN)) {
+		} else if(preferredModality.equals(MODALITY_SCREEN)) {
 			if(type == OUTPUT_TYPE_YES_NO_QUESTION) {
 				//this.ma.setContentView(R.layout.bookingconfirmation);
 				Intent i = new Intent(this.ma, MeetingConfirmation.class);		
@@ -166,6 +168,9 @@ public class UserCommunication {
 				//this.ma.startActivity(new Intent("android.intent.action.CONFIRM"));
 				this.confirm = true;
 			}			
+		} else if(preferredModality.equals(MODALITY_TACTILE)){
+			Vibrator v = (Vibrator) this.ma.getSystemService(Context.VIBRATOR_SERVICE);
+			v.vibrate(1000);
 		}
 	}
 	
