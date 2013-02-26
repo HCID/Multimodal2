@@ -22,8 +22,8 @@ public class UserCommunication {
 	private boolean confirm;
 	private UserInputInterpreter currentCommand;
 	HashMap<String, Integer> modalities;
-	public enum typeOfQuestion {
-		CONFIRM 
+	public enum typeOfOutput {
+		CONFIRM, QUESTION, STATEMENT 
 	};
 	public UserCommunication(MainActivity ma) {
 		
@@ -72,8 +72,8 @@ public class UserCommunication {
 				LinkedList<Booking> possibleBookings = associatedRoom.getPossibleBookings(constr);
 				Booking b = possibleBookings.getFirst();
 				
-				
-				askUser("Do you want to book a meeting in the "+associatedRoom.getSpeechName()+b.getSpeechStartTime()+"?", typeOfQuestion.CONFIRM);	
+		
+				outputToUser("Do you want to book a meeting in the "+associatedRoom.getSpeechName()+b.getSpeechStartTime()+"?", typeOfQuestion.CONFIRM);	
 				}
 			}
 		}
@@ -105,11 +105,17 @@ public class UserCommunication {
 		}		
 	}
 	
-	public void askUser(String msg, typeOfQuestion type) {
+	public void outputToUser(String msg, typeOfOutput type) {
+		if(type == typeOfOutput.CONFIRM) {
+			outputToUserByVoice(msg, type);
+			this.confirm = true;
+		}				
+	}
+	
+	private void outputToUserByVoice(String msg, typeOfOutput type) {
 		this.ma.repeatTTS.setOnUtteranceCompletedListener(new OnUtteranceCompletedListener() {
 	        @Override
 	        public void onUtteranceCompleted(String utteranceId) {
-	        	Log.d("SpeechRepeatActivity", "123");
 	        	askForUserSpeechInput();
 	            
 	        }
@@ -117,7 +123,6 @@ public class UserCommunication {
 		HashMap<String, String> myHashAlarm = new HashMap<String, String>();
 		myHashAlarm.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, "SOME MESSAGE");
 		this.ma.repeatTTS.speak(msg, TextToSpeech.QUEUE_FLUSH, myHashAlarm);
-		this.confirm = true;
 	}
 	
 	
