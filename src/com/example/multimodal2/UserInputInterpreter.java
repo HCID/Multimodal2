@@ -72,7 +72,7 @@ public class UserInputInterpreter {
     static {
     	timeUnitMultiplier = new HashMap<String, Integer>();
     	timeUnitMultiplier.put("a.m.", 0);
-    	timeUnitMultiplier.put("p.m.", 60*60*12);
+    	timeUnitMultiplier.put("p.m.", 60*60*6);
     	timeUnitMultiplier.put("o'clock", 0);
     	timeUnitMultiplier.put("hours", 60*60);
     	timeUnitMultiplier.put("hour", 60*60);
