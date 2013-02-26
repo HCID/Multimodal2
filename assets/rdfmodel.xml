@@ -1,6 +1,21 @@
 <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
   xmlns:ex="http://imi.org/">
 
+<rdf:Description rdf:about="Reminder">
+  <rdf:type rdf:resource="InformationType"/>
+</rdf:Description>
+<rdf:Description rdf:about="Question">
+  <rdf:type rdf:resource="InformationType"/>
+</rdf:Description>
+<rdf:Description rdf:about="Statement">
+  <rdf:type rdf:resource="InformationType"/>
+</rdf:Description>
+<rdf:Description rdf:about="YesNoQuestion">
+  <rdf:type rdf:resource="InformationType"/>
+</rdf:Description>
+
+
+    
 <!-- Modality -->
 <rdf:Description rdf:about="Input">
   <rdf:type rdf:resource="Modality"/>
@@ -34,6 +49,9 @@
 
     <rdf:Description rdf:about="Music">
       <rdf:type rdf:resource="Output"/>
+      <ex:canBeUsedFor rfd:resource="Reminder"/>
+      <ex:canBeUsedFor rfd:resource="Statement"/>
+      <ex:canBeUsedFor rfd:resource="YesNoQuestion"/>
       <ex:hasConstraint rdf:resource="Bright"/>
       <ex:hasConstraint rdf:resource="Dim"/>
       <ex:hasConstraint rdf:resource="Calm"/>
@@ -45,6 +63,8 @@
     
     <rdf:Description rdf:about="Light">
       <rdf:type rdf:resource="Output"/>
+      <ex:canBeUsedFor rfd:resource="Reminder"/>
+      <ex:canBeUsedFor rfd:resource="YesNoQuestion"/>
       <ex:hasConstraint rdf:resource="Bright"/>
       <ex:hasConstraint rdf:resource="Dim"/>
       <ex:hasConstraint rdf:resource="Noisy"/>
@@ -57,6 +77,8 @@
     
     <rdf:Description rdf:about="Tactile">
       <rdf:type rdf:resource="Output"/>
+      <ex:canBeUsedFor rfd:resource="Reminder"/>
+      <ex:canBeUsedFor rfd:resource="YesNoQuestion"/>
       <ex:hasConstraint rdf:resource="Bright"/>
       <ex:hasConstraint rdf:resource="Dim"/>
       <ex:hasConstraint rdf:resource="Noisy"/>
@@ -70,6 +92,10 @@
     
     <rdf:Description rdf:about="Speech">
       <rdf:type rdf:resource="Output"/>
+      <ex:canBeUsedFor rfd:resource="Reminder"/>
+      <ex:canBeUsedFor rfd:resource="Question"/>
+      <ex:canBeUsedFor rfd:resource="Statement"/>
+      <ex:canBeUsedFor rfd:resource="YesNoQuestion"/>
       <ex:hasConstraint rdf:resource="Bright"/>
       <ex:hasConstraint rdf:resource="Dim"/>
       <ex:hasConstraint rdf:resource="Calm"/>

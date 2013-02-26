@@ -33,15 +33,17 @@ public class RDFModel {
 		} 
 	}
 	
-	public HashMap<String,Integer> getModalityForRoom(Room room){
+	public HashMap<String,Integer> getModalityForRoom(Room room, String outputTypeURI){
 		Query query = QueryFactory.create(
 		"PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n" +
 		"PREFIX ex: <http://imi.org/> \n" +
 		"SELECT ?modality ?constraint WHERE { \n" +
 		"	?modality ex:hasConstraint ?constraint . \n" +
+		"	?modality ex:canBeUsedFor ?outputtype . \n" +
 		"	?modality rdf:type ex:Output . \n" +
 		"	?room ex:hasConstraint ?constraint . \n" +
-		"	FILTER ( ?room = <"+room.getURI()+">) \n" +
+		"	FILTER ( ?room = <"+room.getURI()+">) . \n" +
+		" 	FILTER ( ?outputtype = <"+outputTypeURI+">)	\n" +
 		"} \n");
 
 		QueryExecution qe = QueryExecutionFactory.create(query, this.model);

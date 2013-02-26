@@ -15,6 +15,10 @@ import android.util.Log;
 
 public class UserCommunication {
 	
+	private static final String OUTPUT_TYPE_QUESTION = "http://imi.org/Question";
+	private static final String OUTPUT_TYPE_STATEMENT = "http://imi.org/Statement";
+	private static final String OUTPUT_TYPE_YES_NO_QUESTION = "http://imi.org/YesNoQuestion";
+	private static final String OUTPUT_TYPE_REMINDER = "http://imi.org/Reminder";
 	MainActivity ma;
 	TextToSpeech tts;
 	RDFModel rdfModel;
@@ -120,7 +124,7 @@ public class UserCommunication {
 		for(Room room : this.roomList ) {
 			Log.d("SpeechRepeatActivity", "is: " + room.getName() + " and " + cRoom + " the same thing?");
 			if(room.getName().equals(currentRoom)) {
-				modalities = this.rdfModel.getModalityForRoom(room);				
+				modalities = this.rdfModel.getModalityForRoom(room, OUTPUT_TYPE_QUESTION);				
 				break;
 			}
 		}
