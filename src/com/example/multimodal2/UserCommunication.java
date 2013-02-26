@@ -89,19 +89,6 @@ public class UserCommunication {
 				}
 			}
 		}
-		
-		//get some room
-		//Room someRoom = roomList.iterator().next();
-		//create constraint
-		//Constraint c = new Constraint();
-		//int deviation = 60*60; //one hour
-		//constrain to meetings plus minus one hour
-		//c.fuzzyTimeConstrain(new FuzzyTime(new Date(), deviation)); 
-		
-//		LinkedList<Booking> possibleBookings = someRoom.getPossibleBookings(c);
-//		Log.i(this.getClass().getSimpleName(), "Booking :"+possibleBookings.getFirst());
-//		possibleBookings.getFirst().book();	
-		
 
 	
 	public String getModalitiesForRoom(String type) {
@@ -116,8 +103,8 @@ public class UserCommunication {
 		}	
 		String modality = null;
 		Integer modalityVal = -1;
-		for(Map.Entry<String, Integer>mod : modalities.entrySet()) {
-			if(mod.getValue() > modalityVal) {
+		for(Map.Entry<String, Integer>mod : modalities.entrySet()) {						
+			if(mod.getValue() > modalityVal && !mod.getKey().equals(MODALITY_MUSIC) && !mod.getKey().equals(MODALITY_LIGHT)) {
 				modality = mod.getKey();
 				modalityVal = mod.getValue();
 				Log.d(this.ma.LOG_TAG, "maybe: " + mod.getKey());
@@ -144,7 +131,11 @@ public class UserCommunication {
 				this.confirm = true;
 			}	
 			outputToUserByVoice(msg);
-		}					
+		} else if(getModalitiesForRoom(type).equals(MODALITY_SPEECH)) {
+			if(type == OUTPUT_TYPE_YES_NO_QUESTION) {
+				this.ma.setContentView(R.layout.bookingconfirmation);
+			}			
+		}
 	}
 	
 	private void outputToUserByVoice(String msg) {		
