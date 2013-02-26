@@ -1,5 +1,8 @@
 package multimodal;
 
+/**
+ * Properties are just type-safe RDF "hasConstraint" Objects
+ */
 public enum Property {
 	Bright,
 	Dim,
@@ -10,5 +13,5 @@ public enum Property {
 	Standing,
 	Calm,
 	Moving,
-	
+	Greasy,
 }
