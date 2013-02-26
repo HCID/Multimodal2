@@ -63,6 +63,9 @@ public class Constraint {
 	}
 	
 	public Date getEndTime() {
+		if(endTime == null){
+			this.endTime = new Date(Long.MAX_VALUE);
+		}
 		return (Date) endTime.clone();
 	}
 
