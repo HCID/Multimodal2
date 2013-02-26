@@ -14,7 +14,7 @@ public class MeetingConfirmation  extends Activity implements OnClickListener{
 		setContentView(R.layout.bookingconfirmation);
 		 Booking b = (Booking) getIntent().getSerializableExtra("booking");
 		 TextView startTimeView = (TextView) findViewById(R.id.start_time);
-		 startTimeView.setText(b.getStartTime().toGMTString());		 
+		 startTimeView.setText(b.getStartTime().toLocaleString());		 
 		 
 	}
 
