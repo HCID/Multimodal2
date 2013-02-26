@@ -18,12 +18,18 @@ import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Resource;
 
+/**
+ * 
+ * This class makes all the calls to the RDF model
+ *
+ */
 public class RDFModel {
 	private Model model = ModelFactory.createDefaultModel();
 	
 	RDFModel(Context context){
 		InputStream f;
 		try {
+			//load model
 			f = context.getAssets().open("rdfmodel.xml");
 			model.read(f, "http://imi.org/");
 		} catch (IOException e) {
@@ -33,6 +39,14 @@ public class RDFModel {
 		} 
 	}
 	
+	/**
+	 * query for the best modality to use based on the properties of the room
+	 * and the type of message to get accross (question, reminder, statement, etc)
+	 * 
+	 * @param room the room in which the user is currently in
+	 * @param outputTypeURI the URI describing the type of output message
+	 * @return a map containing the modalities and their ranking (higher value is better)
+	 */
 	public HashMap<String,Integer> getModalityForRoom(Room room, String outputTypeURI){
 		Query query = QueryFactory.create(
 		"PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n" +
