@@ -5,8 +5,8 @@ import java.io.InputStream;
 import java.util.HashMap;
 
 import multimodal.schedule.Room;
-
 import android.content.Context;
+import android.util.Log;
 
 import com.hp.hpl.jena.query.Query;
 import com.hp.hpl.jena.query.QueryExecution;
@@ -27,6 +27,7 @@ public class RDFModel {
 			f = context.getAssets().open("rdfmodel.xml");
 			model.read(f, "http://imi.org/");
 		} catch (IOException e) {
+			Log.d("SpeechRepeatActivity", e.toString());
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 

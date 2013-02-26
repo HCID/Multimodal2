@@ -2,9 +2,11 @@ package com.example.multimodal2;
 
 import java.util.HashMap;
 
+import multimodal.RoomFactory;
 import multimodal.schedule.Room;
 import android.app.Activity;
 import android.speech.tts.TextToSpeech;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.hp.hpl.jena.query.Query;
@@ -13,7 +15,6 @@ import com.hp.hpl.jena.query.QueryExecutionFactory;
 import com.hp.hpl.jena.query.QueryFactory;
 import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
-import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.Resource;
 
 public class UserCommunication {
@@ -36,7 +37,15 @@ public class UserCommunication {
 			
 		}
 		
-		String room = "Bathroom";
+		String currentmRoom = "Bathroom";
+		Log.d("SpeechRepeatActivity", RoomFactory.createRoomsFromRDF(this.rdfModel.getModel()).size()+"" );
+		for(Room room : RoomFactory.createRoomsFromRDF(this.rdfModel.getModel()) ) {
+			if(room.getName() == currentmRoom) {
+				HashMap<String, Integer> modalities = this.rdfModel.getModalityForRoom(room);
+			}
+			
+		}
+		
 		Query query = QueryFactory.create("PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> " +
 				"PREFIX ex: <http://imi.org/> " +
 				"SELECT ?room ?constraint WHERE { ?room ex:hasConstraint ?constraint . ?room rdf:type ex:Room }");
