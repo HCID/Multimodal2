@@ -68,10 +68,10 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 
 			@Override
 			public void onItemSelected(AdapterView<?> arg0, View arg1,
-					int arg2, long arg3) {				
-					uc.updateRoom(((TextView) arg1).getText().toString());
-				
-			}
+					int arg2, long arg3) {	
+					uc.setRoom(((TextView) arg1).getText().toString());
+					
+			}	
 			@Override
 			public void onNothingSelected(AdapterView<?> arg0) {
 				// TODO Auto-generated method stub

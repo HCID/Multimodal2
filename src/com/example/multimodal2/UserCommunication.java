@@ -2,6 +2,7 @@ package com.example.multimodal2;
 
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 
 import multimodal.Constraint;
 import multimodal.RoomFactory;
@@ -25,10 +26,7 @@ public class UserCommunication {
 	public String currentRoom;
 	private boolean confirm;
 	private UserInputInterpreter currentCommand;
-	HashMap<String, Integer> modalities;
-	public enum typeOfOutput {
-		CONFIRM, QUESTION, STATEMENT 
-	};
+
 	public UserCommunication(MainActivity ma) {
 		
 		this.ma = ma;
@@ -77,7 +75,7 @@ public class UserCommunication {
 				Booking b = possibleBookings.getFirst();
 				
 		
-				outputToUser("Do you want to book a meeting in the "+associatedRoom.getSpeechName()+b.getSpeechStartTime()+"?", typeOfOutput.QUESTION);	
+				outputToUser("Do you want to book a meeting in the "+associatedRoom.getSpeechName()+b.getSpeechStartTime()+"?", OUTPUT_TYPE_YES_NO_QUESTION);	
 				}
 			}
 		}
@@ -96,34 +94,48 @@ public class UserCommunication {
 		
 
 	
-	public void updateRoom(String cRoom) {
-		this.currentRoom = cRoom;
-		Log.d(this.getClass().getSimpleName(), "Parsed "+roomList.size()+" rooms from RDF" );
+	public String getModalitiesForRoom(String type) {
+
+		HashMap<String, Integer> modalities = null;	
 		
 		for(Room room : this.roomList ) {
-			Log.d("SpeechRepeatActivity", "is: " + room.getName() + " and " + cRoom + " the same thing?");
 			if(room.getName().equals(currentRoom)) {
 				modalities = this.ma.rdfModel.getModalityForRoom(room, OUTPUT_TYPE_QUESTION);				
 				break;
 			}
-		}		
+		}	
+		String modality = null;
+		Integer modalityVal = -1;
+		for(Map.Entry<String, Integer>mod : modalities.entrySet()) {
+			if(mod.getValue() > modalityVal) {
+				modality = mod.getKey();
+				modalityVal = mod.getValue();
+			}
+		}
+		return modality;
 	}
 	
-	public void outputToUser(String msg, typeOfOutput type) {
-		if(type == typeOfOutput.CONFIRM) {
-			outputToUserByVoice(msg, type);
-			this.confirm = true;
-		}				
+	public void setRoom(String room) {
+		this.currentRoom = room;
 	}
 	
-	private void outputToUserByVoice(String msg, typeOfOutput type) {
-		this.ma.repeatTTS.setOnUtteranceCompletedListener(new OnUtteranceCompletedListener() {
-	        @Override
-	        public void onUtteranceCompleted(String utteranceId) {
-	        	askForUserSpeechInput();
-	            
-	        }
-	    });
+	public void outputToUser(String msg, String type) {
+		if(getModalitiesForRoom(type).equals("Speech")) {
+			if(type == OUTPUT_TYPE_YES_NO_QUESTION) {
+				this.ma.repeatTTS.setOnUtteranceCompletedListener(new OnUtteranceCompletedListener() {
+			        @Override
+			        public void onUtteranceCompleted(String utteranceId) {
+			        	askForUserSpeechInput();
+			            
+			        }
+			    });
+				this.confirm = true;
+			}	
+			outputToUserByVoice(msg);
+		}					
+	}
+	
+	private void outputToUserByVoice(String msg) {		
 		HashMap<String, String> myHashAlarm = new HashMap<String, String>();
 		myHashAlarm.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, "SOME MESSAGE");
 		this.ma.repeatTTS.speak(msg, TextToSpeech.QUEUE_FLUSH, myHashAlarm);
