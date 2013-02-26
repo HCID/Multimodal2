@@ -87,6 +87,7 @@ public class UserCommunication {
 			if(this.confirm) {
 				if(text.contains("yes")) {
 					currentBooking.book();
+					Log.d("aa", "Hapilly booked");
 				}
 				this.confirm = false;
 				this.currentCommand = null;

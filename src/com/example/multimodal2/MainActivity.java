@@ -126,11 +126,10 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 				startActivity(installTTSIntent);
 			}
 		} else if(requestCode == 3 && resultCode == RESULT_OK) {
-			uc.confirm(true);
+			uc.InputFromUser("yes");
 		} else if(requestCode == 3 && resultCode == RESULT_CANCELED) {
-			uc.confirm(false);
+			uc.InputFromUser("no");
 		}
-		Log.d("aa", "yayy" + requestCode + "--- " + resultCode);
 		
 		super.onActivityResult(requestCode, resultCode, data);
 	}
