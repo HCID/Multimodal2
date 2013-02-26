@@ -141,10 +141,9 @@ public class UserCommunication {
 			if(mod.getValue() > modalityVal && !mod.getKey().equals(MODALITY_MUSIC) && !mod.getKey().equals(MODALITY_LIGHT)) {
 				modality = mod.getKey();
 				modalityVal = mod.getValue();
-				Log.d(this.ma.LOG_TAG, "maybe: " + mod.getKey());
 			}
 		}
-		Log.d(this.ma.LOG_TAG, "chosen: " + modality);
+		Log.d(this.getClass().getName(), "chosen modality: " + modality);
 		return modality;
 	}
 	
@@ -161,14 +160,14 @@ public class UserCommunication {
 	 * @param msg the message to output
 	 * @param type the type of message (question, reminder, statement, etc.)
 	 */
-	public void outputToUser(String msg, String type) {
+	public void outputToUser(final String msg, String type) {
 		String preferredModality = getModalitiesForRoom(type);
 		if(preferredModality.equals(MODALITY_SPEECH)) {
 			if(type == OUTPUT_TYPE_YES_NO_QUESTION) {
-				this.ma.repeatTTS.setOnUtteranceCompletedListener(new OnUtteranceCompletedListener() {
+				this.ma.tts.setOnUtteranceCompletedListener(new OnUtteranceCompletedListener() {
 			        @Override
 			        public void onUtteranceCompleted(String utteranceId) {
-			        	askForUserSpeechInput();
+			        	askForUserSpeechInput(msg);
 			            
 			        }
 			    });
@@ -177,11 +176,9 @@ public class UserCommunication {
 			outputToUserByVoice(msg);
 		} else if(preferredModality.equals(MODALITY_SCREEN)) {
 			if(type == OUTPUT_TYPE_YES_NO_QUESTION) {
-				//this.ma.setContentView(R.layout.bookingconfirmation);
 				Intent i = new Intent(this.ma, MeetingConfirmation.class);		
 				i.putExtra("booking", currentBooking);
 				this.ma.startActivityForResult(i,3); 
-				//this.ma.startActivity(new Intent("android.intent.action.CONFIRM"));
 				this.confirm = true;
 			}			
 		} else if(preferredModality.equals(MODALITY_TACTILE)){
@@ -197,20 +194,20 @@ public class UserCommunication {
 	private void outputToUserByVoice(String msg) {		
 		HashMap<String, String> myHashAlarm = new HashMap<String, String>();
 		myHashAlarm.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, "SOME MESSAGE");
-		this.ma.repeatTTS.speak(msg, TextToSpeech.QUEUE_FLUSH, myHashAlarm);
+		this.ma.tts.speak(msg, TextToSpeech.QUEUE_FLUSH, myHashAlarm);
 		Toast.makeText(this.ma, msg, Toast.LENGTH_LONG).show();
 	}
 	
 	/**
 	 * speech input request
 	 */
-	public void askForUserSpeechInput() {
+	public void askForUserSpeechInput(String msg) {
 		Intent listenIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
 		listenIntent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, getClass().getPackage().getName());
-		listenIntent.putExtra(RecognizerIntent.EXTRA_PROMPT, "What do you want to do?");
+		listenIntent.putExtra(RecognizerIntent.EXTRA_PROMPT, msg);
 		listenIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
 		listenIntent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1);
-		this.ma.startActivityForResult(listenIntent, this.ma.VR_REQUEST);
+		this.ma.startActivityForResult(listenIntent, MainActivity.VR_REQUEST);
 	}
 
 }
