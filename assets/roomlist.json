@@ -1,0 +1,38 @@
+[
+    {
+        "room": "RestingRoom",
+        "date": "",
+        "start_time": "",
+        "end_time": ""
+    },
+    {
+        "room": "Hallway",
+        "date": "",
+        "start_time": "",
+        "end_time": ""
+    },
+    {
+        "room": "OfficeRoom",
+        "date": "",
+        "start_time": "",
+        "end_time": ""
+    },
+    {
+        "room": "MeetingRoom",
+        "date": "",
+        "start_time": "",
+        "end_time": ""
+    },
+    {
+        "room": "Bathroom",
+        "date": "",
+        "start_time": "",
+        "end_time": ""
+    },
+    {
+        "room": "Kitchen",
+        "date": "",
+        "start_time": "",
+        "end_time": ""
+    }
+]
