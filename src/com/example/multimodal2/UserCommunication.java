@@ -155,7 +155,7 @@ public class UserCommunication {
 				this.confirm = true;
 			}	
 			outputToUserByVoice(msg);
-		} else if(getModalitiesForRoom(type).equals(MODALITY_SPEECH)) {
+		} else if(getModalitiesForRoom(type).equals(MODALITY_SCREEN)) {
 			if(type == OUTPUT_TYPE_YES_NO_QUESTION) {
 				this.ma.setContentView(R.layout.bookingconfirmation);
 			}			
