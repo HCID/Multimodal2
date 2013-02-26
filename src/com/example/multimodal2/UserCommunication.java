@@ -1,8 +1,14 @@
 package com.example.multimodal2;
 
+import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedList;
 
+import multimodal.Constraint;
+import multimodal.FuzzyTime;
 import multimodal.RoomFactory;
+import multimodal.schedule.Booking;
 import multimodal.schedule.Room;
 import android.app.Activity;
 import android.speech.tts.TextToSpeech;
@@ -37,37 +43,26 @@ public class UserCommunication {
 			
 		}
 		
+		Collection<Room> roomList= RoomFactory.createRoomsFromRDF(this.rdfModel.getModel());
 		String currentmRoom = "Bathroom";
-		Log.d("SpeechRepeatActivity", RoomFactory.createRoomsFromRDF(this.rdfModel.getModel()).size()+"" );
-		for(Room room : RoomFactory.createRoomsFromRDF(this.rdfModel.getModel()) ) {
+		Log.d(this.getClass().getSimpleName(), "Parsed "+roomList.size()+" rooms from RDF" );
+		for(Room room : roomList ) {
 			if(room.getName() == currentmRoom) {
 				HashMap<String, Integer> modalities = this.rdfModel.getModalityForRoom(room);
 			}
-			
 		}
 		
-		Query query = QueryFactory.create("PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> " +
-				"PREFIX ex: <http://imi.org/> " +
-				"SELECT ?room ?constraint WHERE { ?room ex:hasConstraint ?constraint . ?room rdf:type ex:Room }");
-		QueryExecution qe = QueryExecutionFactory.create(query, rdfModel.getModel());
-	    ResultSet rs = qe.execSelect();
-	
-	    HashMap<String,Room> roomMap =  new HashMap<String, Room>();
-	    while(rs.hasNext())
-	    {
-	    	QuerySolution sol = rs.next();
-	    	Resource resroom = sol.getResource("room");
-	    	Resource resconstraint = sol.getResource("constraint");
-	    	if(!roomMap.containsKey(resroom.getLocalName())){
-	    		roomMap.put(resroom.getLocalName(), new Room(resroom.getURI(), resroom.getLocalName()));
-	    	}
-	    	//adding each constraint (or property) to the given room
-	    	roomMap.get(resroom.getLocalName()).addPropertyByName(resconstraint.getLocalName());
-	    }
-	    qe.close();
+		//get some room
+		Room someRoom = roomList.iterator().next();
+		//create constraint
+		Constraint c = new Constraint();
+		int deviation = 60*60; //one hour
+		//constrain to meetings plus minus one hour
+		c.fuzzyTimeConstrain(new FuzzyTime(new Date(), deviation)); 
 		
-		
-		
+		LinkedList<Booking> possibleBookings = someRoom.getPossibleBookings(c);
+		Log.i(this.getClass().getSimpleName(), "Booking :"+possibleBookings.getFirst());
+		possibleBookings.getFirst().book();	
 		
 	}
 

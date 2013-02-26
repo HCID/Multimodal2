@@ -9,27 +9,27 @@ public class FuzzyTime implements Cloneable{
 	Date endTime;
 	long durationSeconds;
 
-	FuzzyTime(Date startTime){
+	public FuzzyTime(Date startTime){
 		this.startTime = startTime;
 		this.deviationSeconds = FuzzyTime.DEFAULT_DEVIATION_SEC;
 	}
 	
-	FuzzyTime(Date startTime, long deviationSeconds){
+	public FuzzyTime(Date startTime, long deviationSeconds){
 		this(startTime);
 		this.deviationSeconds = deviationSeconds;
 	}
 	
-	FuzzyTime(Date startTime, Date endTime){
+	public FuzzyTime(Date startTime, Date endTime){
 		this(startTime);
 		this.endTime = endTime;
 	}
 	
-	FuzzyTime(Date startTime, Date endTime, long deviation){
+	public FuzzyTime(Date startTime, Date endTime, long deviation){
 		this(startTime, endTime);
 		this.deviationSeconds = deviation;
 	}
 	
-	FuzzyTime setDuration(long durationSeconds){
+	public FuzzyTime setDuration(long durationSeconds){
 		this.endTime = new Date(this.startTime.getTime()+durationSeconds*1000);
 		return this;
 	}
