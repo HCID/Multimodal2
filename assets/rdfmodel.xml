@@ -85,6 +85,7 @@
     
     <rdf:Description rdf:about="Speech">
       <rdf:type rdf:resource="Output"/>
+      <ex:canBeUsedFor rdf:resource="YesNoQuestion"/>
       <ex:canBeUsedFor rdf:resource="Reminder"/>
       <ex:canBeUsedFor rdf:resource="Question"/>
       <ex:canBeUsedFor rdf:resource="Statement"/>
