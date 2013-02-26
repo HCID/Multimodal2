@@ -34,7 +34,7 @@ public class UserCommunication {
 	private MainActivity ma;
 	
 	private LinkedList<Room> roomList;
-	public String currentRoom;
+	public String locationContext;
 	private boolean confirm;
 	private Booking currentBooking;
 	private UserInputInterpreter currentCommand;
@@ -47,12 +47,13 @@ public class UserCommunication {
 		roomList= RoomFactory.createRoomsFromRDF(this.ma.rdfModel.getModel());
 	}
 	
+	/**
+	 * interprets the input from the user speech input
+	 * @param text the text from the speech recognizer
+	 */
 	public void InputFromUser(String text) {
 		Log.d("SpeechRepeatActivity", text);
-		//Toast.makeText(this.ma, "You said: "+text, Toast.LENGTH_LONG).show();
-		//if(this.tts != null) {
-			//this.tts.speak("You said: "+text, TextToSpeech.QUEUE_FLUSH, null);
-		//}
+
 		if(this.currentCommand == null) {
 			this.currentCommand = new UserInputInterpreter(text, roomList);
 		}
@@ -80,8 +81,8 @@ public class UserCommunication {
 			}
 		} else
 		if(currentCommand.command == UserInputInterpreter.CommandType.WHEN) {
-		
-
+			// not implemented
+			// possibly query for a booked room
 		} else 
 		if(currentCommand.command == UserInputInterpreter.CommandType.BOOK) {
 			if(this.confirm) {
@@ -109,20 +110,27 @@ public class UserCommunication {
 				}
 				LinkedList<Booking> possibleBookings = associatedRoom.getPossibleBookings(constr);
 				currentBooking = possibleBookings.getFirst();
-				
 		
 				outputToUser("Do you want to book a meeting in the "+associatedRoom.getSpeechName()+currentBooking.getSpeechStartTime()+"?", OUTPUT_TYPE_YES_NO_QUESTION);	
-				}
 			}
 		}
+	}
 
-	
+
+	/**
+	 * gets the best modality for the response to the user based on
+	 * the current locatio (room) and the kind of message that
+	 * should be passed to the user (question, statement, reminder etc)
+	 * 
+	 * @param type the kind of message
+	 * @return a RDF URI describing the best modality to use
+	 */
 	public String getModalitiesForRoom(String type) {
 
 		HashMap<String, Integer> modalities = null;	
 		
 		for(Room room : this.roomList ) {
-			if(room.getName().equals(currentRoom)) {
+			if(room.getName().equals(locationContext)) {
 				modalities = this.ma.rdfModel.getModalityForRoom(room, OUTPUT_TYPE_QUESTION);				
 				break;
 			}
@@ -140,10 +148,19 @@ public class UserCommunication {
 		return modality;
 	}
 	
-	public void setRoom(String room) {
-		this.currentRoom = room;
+	/**
+	 * Sets the context in which the messages should be evaluated.
+	 * @param room the location (room name)
+	 */
+	public void setLocationContext(String room) {
+		this.locationContext = room;
 	}
 	
+	/**
+	 * this method outputs the message to the user using the best available modality
+	 * @param msg the message to output
+	 * @param type the type of message (question, reminder, statement, etc.)
+	 */
 	public void outputToUser(String msg, String type) {
 		String preferredModality = getModalitiesForRoom(type);
 		if(preferredModality.equals(MODALITY_SPEECH)) {
@@ -173,6 +190,10 @@ public class UserCommunication {
 		}
 	}
 	
+	/**
+	 * Speech output
+	 * @param msg the message
+	 */
 	private void outputToUserByVoice(String msg) {		
 		HashMap<String, String> myHashAlarm = new HashMap<String, String>();
 		myHashAlarm.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, "SOME MESSAGE");
@@ -180,7 +201,9 @@ public class UserCommunication {
 		Toast.makeText(this.ma, msg, Toast.LENGTH_LONG).show();
 	}
 	
-	
+	/**
+	 * speech input request
+	 */
 	public void askForUserSpeechInput() {
 		Intent listenIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
 		listenIntent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, getClass().getPackage().getName());
