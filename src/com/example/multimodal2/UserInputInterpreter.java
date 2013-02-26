@@ -52,12 +52,13 @@ public class UserInputInterpreter {
 	}
 
 	private Room interpreteRoom(String text, LinkedList<Room> allRooms) {
+		text = text.toLowerCase();
 		for(Room r : allRooms){
-			if(text.contains(r.getName())){
+			if(text.contains(r.getName().toLowerCase())){
 				return r;
 			}
 			for(String alias : r.getAliases()){
-				if(text.contains(alias)){
+				if(text.contains(alias.toLowerCase())){
 					return r;
 				}
 			}
