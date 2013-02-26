@@ -65,10 +65,12 @@ public class UserCommunication {
 					@Override
 					public void run() {
 						while(remindAtTime.getTime()<new Date().getTime()){
-							try {
-								this.wait(1000, 0);
-							} catch (InterruptedException e) {
-								e.printStackTrace();
+							synchronized (this) {
+								try {
+									this.wait(1000, 0);
+								} catch (InterruptedException e) {
+									e.printStackTrace();
+								}	
 							}
 						}
 						Toast.makeText(activity, "============ WAKE UP! =========",Toast.LENGTH_LONG).show();
