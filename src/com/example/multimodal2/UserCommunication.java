@@ -23,6 +23,9 @@ public class UserCommunication {
 	private boolean confirm;
 	private UserInputInterpreter currentCommand;
 	HashMap<String, Integer> modalities;
+	public enum typeOfQuestion {
+		CONFIRM 
+	};
 	public UserCommunication(MainActivity ma) {
 		
 		this.ma = ma;
@@ -69,27 +72,9 @@ public class UserCommunication {
 				}
 				LinkedList<Booking> possibleBookings = associatedRoom.getPossibleBookings(constr);
 				Booking b = possibleBookings.getFirst();
-				String msg = "Do you want to book a meeting in the "+associatedRoom.getSpeechName()+b.getSpeechStartTime()+"?";
-				this.tts.setOnUtteranceCompletedListener(new OnUtteranceCompletedListener() {
-
-			        @Override
-			        public void onUtteranceCompleted(String utteranceId) {
-			        	Log.d("SpeechRepeatActivity", "123");
-			        	askForUserSpeechInput();
-			            
-			        }
-			    });
-				
-				HashMap<String, String> myHashAlarm = new HashMap<String, String>();
-				myHashAlarm.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, "SOME MESSAGE");
-				this.tts.speak(msg, TextToSpeech.QUEUE_FLUSH, myHashAlarm);
 				
 				
-				
-					
-					this.confirm = true;
-					
-					
+				askUser("Do you want to book a meeting in the "+associatedRoom.getSpeechName()+b.getSpeechStartTime()+"?", typeOfQuestion.CONFIRM);	
 				}
 			}
 		}
@@ -123,8 +108,22 @@ public class UserCommunication {
 				modalities = this.rdfModel.getModalityForRoom(room);				
 				break;
 			}
-		}
-		//Log.d("SpeechRepeatActivity", "we are in: " + modalities.);
+		}		
+	}
+	
+	public void askUser(String msg, typeOfQuestion type) {
+		this.tts.setOnUtteranceCompletedListener(new OnUtteranceCompletedListener() {
+	        @Override
+	        public void onUtteranceCompleted(String utteranceId) {
+	        	Log.d("SpeechRepeatActivity", "123");
+	        	askForUserSpeechInput();
+	            
+	        }
+	    });
+		HashMap<String, String> myHashAlarm = new HashMap<String, String>();
+		myHashAlarm.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, "SOME MESSAGE");
+		this.tts.speak(msg, TextToSpeech.QUEUE_FLUSH, myHashAlarm);
+		this.confirm = true;
 	}
 	
 	
