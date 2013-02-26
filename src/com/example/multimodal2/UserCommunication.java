@@ -11,27 +11,32 @@ import multimodal.RoomFactory;
 import multimodal.schedule.Booking;
 import multimodal.schedule.Room;
 import android.app.Activity;
+import android.content.Intent;
+import android.speech.RecognizerIntent;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.widget.Toast;
 
 public class UserCommunication {
-	Activity ma;
+	
+	MainActivity ma;
 	TextToSpeech tts;
 	RDFModel rdfModel;
 	private Collection<Room> roomList;
 	public String currentRoom;
-	public UserCommunication(Activity ma) {
-		roomList= RoomFactory.createRoomsFromRDF(this.rdfModel.getModel());
+	public UserCommunication(MainActivity ma) {
+		
 		this.ma = ma;
 		
 		this.rdfModel = new RDFModel(this.ma);		
+		roomList= RoomFactory.createRoomsFromRDF(this.rdfModel.getModel());
 	}
 	
 	public void InputFromUser(String text) {
+		Log.d("SpeechRepeatActivity", text);
 		Toast.makeText(this.ma, "You said: "+text, Toast.LENGTH_LONG).show();
 		if(this.tts != null) {
-			this.tts.speak("You said: "+text, TextToSpeech.QUEUE_FLUSH, null);
+			//this.tts.speak("You said: "+text, TextToSpeech.QUEUE_FLUSH, null);
 		}
 		UserInputInterpreter uii = new UserInputInterpreter(text);
 		if(uii.command == UserInputInterpreter.CommandType.WHEN) {
@@ -55,7 +60,7 @@ public class UserCommunication {
 			}
 
 		}
-		Collection<Room> roomList= RoomFactory.createRoomsFromRDF(this.rdfModel.getModel());
+//		Collection<Room> roomList= RoomFactory.createRoomsFromRDF(this.rdfModel.getModel());
 		Log.d(this.getClass().getSimpleName(), "Parsed "+roomList.size()+" rooms from RDF" );
 		for(Room room : roomList ) {
 			if(room.getName() == currentRoom) {
@@ -81,6 +86,16 @@ public class UserCommunication {
 	public void updateTTS(TextToSpeech repeatTTS) {
 		this.tts = repeatTTS;
 		
+	}
+	
+	
+	public void askForUserSpeechInput() {
+		Intent listenIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+		listenIntent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, getClass().getPackage().getName());
+		listenIntent.putExtra(RecognizerIntent.EXTRA_PROMPT, "What do you want to do?");
+		listenIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+		listenIntent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1);
+		this.ma.startActivityForResult(listenIntent, this.ma.VR_REQUEST);
 	}
 	
 	

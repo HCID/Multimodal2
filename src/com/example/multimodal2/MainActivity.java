@@ -28,7 +28,7 @@ import android.widget.Toast;
 
 public class MainActivity extends Activity implements OnClickListener, OnInitListener {
 
-	private static final int VR_REQUEST = 999;
+	protected static final int VR_REQUEST = 999;
 	final String LOG_TAG = "SpeechRepeatActivity";
 	private int MY_DATA_CHECK_CODE = 0;
 	private TextToSpeech repeatTTS;
@@ -100,12 +100,7 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 	@Override
 	public void onClick(View v) {
 		if (v.getId() == R.id.speech_btn) {
-			Intent listenIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-			listenIntent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, getClass().getPackage().getName());
-			listenIntent.putExtra(RecognizerIntent.EXTRA_PROMPT, "What do you want to do?");
-			listenIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-			listenIntent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1);
-			startActivityForResult(listenIntent, VR_REQUEST);
+			uc.askForUserSpeechInput();
 		}
 	}
 

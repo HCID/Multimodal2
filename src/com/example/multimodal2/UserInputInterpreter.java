@@ -42,9 +42,9 @@ public class UserInputInterpreter {
 		} else if(text.contains("cancel")) {
 			this.command = CommandType.CANCEL;
 		} else if(text.contains("book")) {
-			this.command = CommandType.CANCEL;
+			this.command = CommandType.BOOK;
 		} else if(text.contains("who")) {
-			this.command = CommandType.CANCEL;
+			this.command = CommandType.WHO;
 		}
 	}
 
