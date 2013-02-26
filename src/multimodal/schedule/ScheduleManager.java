@@ -7,6 +7,11 @@ import java.util.LinkedList;
 import multimodal.Constraint;
 import multimodal.FuzzyTime;
 
+/**
+ * 
+ * ScheduleManager is a convenience class that 
+ *
+ */
 public class ScheduleManager implements Serializable{
 	private Collection<Room> rooms;
 

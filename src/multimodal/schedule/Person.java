@@ -6,6 +6,7 @@ import java.util.LinkedList;
 
 import multimodal.Property;
 
+@Deprecated
 public class Person implements Serializable {
 	static int nextUID = 0;
 	private int uid;
