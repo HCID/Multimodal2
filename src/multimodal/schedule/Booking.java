@@ -65,4 +65,25 @@ public class Booking {
 	public String toString() {
 		return "Booking: "+this.startTime.toString()+" - "+this.endTime.toString();
 	}
+
+	public String getSpeechStartTime() {
+		StringBuilder sb = new StringBuilder();
+		Date now = new Date();
+		Date today = new Date(now.getYear(), now.getMonth(), now.getDate());
+		Date thisDay = new Date(this.startTime.getYear(), this.startTime.getMonth(), this.startTime.getDate());
+		long offset = this.startTime.getTime() - today.getTime();
+		if(offset > 0){
+			if(offset > 1000*60*60*24*3){
+				sb.append(" in "+(offset/1000*60*60*24)+" days ");
+			} else if(offset > 1000*60*60*24*2){
+				sb.append(" the day after tomorrow ");
+			} else if(offset > 1000*60*60*24){
+				sb.append(" tomorrow ");
+			} else if(offset <= 1000*60*60*24){
+				sb.append(" today ");
+			}
+		}
+		sb.append(" at "+thisDay.getHours()+" o'clock");
+		return sb.toString();
+	}
 }

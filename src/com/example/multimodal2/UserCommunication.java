@@ -19,8 +19,9 @@ public class UserCommunication {
 	Activity ma;
 	TextToSpeech tts;
 	RDFModel rdfModel;
+	private Collection<Room> roomList;
 	public UserCommunication(Activity ma) {
-		
+		roomList= RoomFactory.createRoomsFromRDF(this.rdfModel.getModel());
 		this.ma = ma;
 		this.rdfModel = new RDFModel(this.ma);		
 	}
@@ -32,17 +33,25 @@ public class UserCommunication {
 		}
 		UserInputInterpreter uii = new UserInputInterpreter(text);
 		if(uii.command == UserInputInterpreter.CommandType.WHEN) {
-			
-		}
 		
-		Collection<Room> roomList= RoomFactory.createRoomsFromRDF(this.rdfModel.getModel());
-		String currentmRoom = "Bathroom";
-		Log.d(this.getClass().getSimpleName(), "Parsed "+roomList.size()+" rooms from RDF" );
-		for(Room room : roomList ) {
-			if(room.getName() == currentmRoom) {
-				HashMap<String, Integer> modalities = this.rdfModel.getModalityForRoom(room);
+		} else if(uii.command == UserInputInterpreter.CommandType.BOOK) {
+			Room bestRoom = null;
+			for(Room room : roomList ) {
+				//TODO constrain rooms based on RDF
+				bestRoom = room;
+			}
+			if(bestRoom!=null){
+				Constraint constr = new Constraint();
+				if(uii.time != null){
+					constr.fuzzyTimeConstrain(uii.time);
+				}
+				LinkedList<Booking> possibleBookings = bestRoom.getPossibleBookings(constr);
+				Booking b = possibleBookings.getFirst();
+				String msg = "Do you want to book a meeting in the "+bestRoom.getName()+b.getSpeechStartTime()+"?";
+				this.tts.speak(msg, TextToSpeech.QUEUE_FLUSH, null);
 			}
 		}
+
 		
 		//get some room
 		Room someRoom = roomList.iterator().next();
