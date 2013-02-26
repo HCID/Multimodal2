@@ -14,7 +14,6 @@ import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.TextToSpeech.OnInitListener;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -67,11 +66,11 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 			@Override
 			public void onItemSelected(AdapterView<?> arg0, View arg1,
 					int arg2, long arg3) {	
-					uc.setRoom(((TextView) arg1).getText().toString());					
+					uc.setLocationContext(((TextView) arg1).getText().toString());					
 			}	
 			@Override
 			public void onNothingSelected(AdapterView<?> arg0) {
-				// TODO Auto-generated method stub				
+					
 			}			
 		});				
 	}
