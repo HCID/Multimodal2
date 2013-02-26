@@ -157,7 +157,11 @@ public class UserCommunication {
 			outputToUserByVoice(msg);
 		} else if(getModalitiesForRoom(type).equals(MODALITY_SCREEN)) {
 			if(type == OUTPUT_TYPE_YES_NO_QUESTION) {
-				this.ma.setContentView(R.layout.bookingconfirmation);
+				//this.ma.setContentView(R.layout.bookingconfirmation);
+				Intent i = new Intent(this.ma, MeetingConfirmation.class);		
+				i.putExtra("booking", currentBooking);
+				this.ma.startActivity(i); 
+				//this.ma.startActivity(new Intent("android.intent.action.CONFIRM"));
 			}			
 		}
 	}

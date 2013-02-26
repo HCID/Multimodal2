@@ -1,8 +1,9 @@
 package multimodal;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class FuzzyTime implements Cloneable{
+public class FuzzyTime implements Cloneable, Serializable{
 	private static final long DEFAULT_DEVIATION_SEC = 10*60;
 	long deviationSeconds;
 	Date startTime;

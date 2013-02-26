@@ -1,12 +1,13 @@
 package multimodal.schedule;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.LinkedList;
 
 import multimodal.Constraint;
 import multimodal.FuzzyTime;
 
-public class ScheduleManager {
+public class ScheduleManager implements Serializable{
 	private Collection<Room> rooms;
 
 	public ScheduleManager(Collection<Room> rooms){

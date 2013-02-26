@@ -1,5 +1,6 @@
 package multimodal.schedule;
 
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -8,7 +9,7 @@ import java.util.LinkedList;
 import multimodal.Constraint;
 import multimodal.FuzzyTime;
 
-public class Schedule {
+public class Schedule implements Serializable {
 	
 	//has to be sorted along the time axis!
 	private LinkedList<Booking> bookings;
