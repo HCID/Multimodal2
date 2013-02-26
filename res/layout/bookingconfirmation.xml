@@ -19,50 +19,72 @@
         android:layout_width="wrap_content"
         android:layout_height="275dp"
         android:orientation="vertical" >
-
+		
         <TextView
             android:id="@+id/confirmationroom"
             android:layout_width="278dp"
-            android:layout_height="57dp"
-            android:layout_marginBottom="46dp"
-            android:background="@drawable/bg"
+            android:layout_height="38dp"
             android:ems="10"
             android:text="Room:"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textSize="25dp" />
+        
+        <TextView
+            android:id="@+id/confirmationroom2"
+            android:layout_width="278dp"
+            android:layout_height="38dp"
+            android:layout_marginBottom="23dp"
+            android:background="@drawable/bg"
+            android:ems="10"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textSize="25dp" />
 		
         <TextView
-            android:id="@+id/start_time"
+            android:id="@+id/starttime"
             android:layout_width="278dp"
-            android:layout_height="57dp"
-            android:layout_marginBottom="46dp"
-            android:background="@drawable/bg"
+            android:layout_height="38dp"
             android:ems="10"
             android:text="Start Time:"
-            
-            android:textSize="25dp" >
-
-            <requestFocus />
-        </TextView>
-
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textSize="25dp" />
+        
         <TextView
-            android:id="@+id/end_time"
+            android:id="@+id/starttime2"
             android:layout_width="278dp"
-            android:layout_height="57dp"
-            android:layout_marginBottom="46dp"
+            android:layout_height="38dp"
+            android:layout_marginBottom="23dp"
             android:background="@drawable/bg"
             android:ems="10"
-            android:text="End Time:"
-            
+            android:textAppearance="?android:attr/textAppearanceMedium"
             android:textSize="25dp" />
-
+        
+        <TextView
+            android:id="@+id/endtime"
+            android:layout_width="278dp"
+            android:layout_height="38dp"
+            android:ems="10"
+            android:text="End Time:"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textSize="25dp" />
+        
+        <TextView
+            android:id="@+id/endtime2"
+            android:layout_width="278dp"
+            android:layout_height="38dp"
+            android:layout_marginBottom="23dp"
+            android:background="@drawable/bg"
+            android:ems="10"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textSize="25dp" />
+        
     </LinearLayout>
 
     <TextView
         android:id="@+id/confirmationmessage"
         android:layout_width="331dp"
-        android:layout_height="63dp"
-        android:text="Do you want to confirm this booking?"        
+        android:layout_height="75dp"
+        android:layout_marginBottom="3dp"
+        android:text="Do you want to confirm this booking?"
         android:textSize="30dp" />
 
     <LinearLayout
