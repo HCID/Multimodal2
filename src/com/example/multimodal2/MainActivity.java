@@ -55,36 +55,25 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 		checkTTSIntent.setAction(TextToSpeech.Engine.ACTION_CHECK_TTS_DATA);
 		startActivityForResult(checkTTSIntent, MY_DATA_CHECK_CODE);
 		
-		Spinner spinner = (Spinner) findViewById(R.id.current_place);
-
-		
-		
+		Spinner spinner = (Spinner) findViewById(R.id.current_place);		
 		ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item);
-		//spinnerArrayAdapter.setDropDownViewResource(android.R.layout.);
-		
+
 		for(Room room : RoomFactory.createRoomsFromRDF(this.rdfModel.getModel()) ) {
 			spinnerArrayAdapter.add(room.getName());
-		}
-		
-		spinner.setAdapter(spinnerArrayAdapter);
-		
+		}		
+		spinner.setAdapter(spinnerArrayAdapter);		
 		spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 			@Override
 			public void onItemSelected(AdapterView<?> arg0, View arg1,
 					int arg2, long arg3) {	
-					uc.setLocationContext(((TextView) arg1).getText().toString());
-					
+					uc.setRoom(((TextView) arg1).getText().toString());					
 			}	
 			@Override
 			public void onNothingSelected(AdapterView<?> arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-		});
-		
-		
+				// TODO Auto-generated method stub				
+			}			
+		});				
 	}
 
 	@Override
@@ -126,11 +115,10 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 				startActivity(installTTSIntent);
 			}
 		} else if(requestCode == 3 && resultCode == RESULT_OK) {
-			Log.d("aa", "ya222yy");
+			uc.InputFromUser("yes");
 		} else if(requestCode == 3 && resultCode == RESULT_CANCELED) {
-			Log.d("aa", "ya222yy");
+			uc.InputFromUser("no");
 		}
-		Log.d("aa", "yayy" + requestCode + "--- " + resultCode);
 		
 		super.onActivityResult(requestCode, resultCode, data);
 	}

@@ -11,7 +11,8 @@
         android:layout_width="306dp"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="EventName" />
+        android:hint="EventName"
+        android:layout_marginTop="3dp" />
 
     <DatePicker
         android:id="@+id/datePicker1"

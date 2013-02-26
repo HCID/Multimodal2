@@ -52,8 +52,6 @@ public class UserCommunication {
 	 * @param text the text from the speech recognizer
 	 */
 	public void InputFromUser(String text) {
-		Log.d("SpeechRepeatActivity", text);
-
 		if(this.currentCommand == null) {
 			this.currentCommand = new UserInputInterpreter(text, roomList);
 		}
@@ -88,6 +86,7 @@ public class UserCommunication {
 			if(this.confirm) {
 				if(text.contains("yes")) {
 					currentBooking.book();
+					Toast.makeText(this.ma, "Booked!", Toast.LENGTH_LONG).show();
 				}
 				this.confirm = false;
 				this.currentCommand = null;
@@ -110,6 +109,7 @@ public class UserCommunication {
 				}
 				LinkedList<Booking> possibleBookings = associatedRoom.getPossibleBookings(constr);
 				currentBooking = possibleBookings.getFirst();
+				
 		
 				outputToUser("Do you want to book a meeting in the "+associatedRoom.getSpeechName()+currentBooking.getSpeechStartTime()+"?", OUTPUT_TYPE_YES_NO_QUESTION);	
 			}
@@ -213,6 +213,4 @@ public class UserCommunication {
 		this.ma.startActivityForResult(listenIntent, this.ma.VR_REQUEST);
 	}
 
-	
-	
 }
