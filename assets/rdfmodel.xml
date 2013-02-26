@@ -83,6 +83,22 @@
       <ex:hasConstraint rdf:resource="Standing"/>
     </rdf:Description>
     
+    <rdf:Description rdf:about="Screen">
+      <rdf:type rdf:resource="Output"/>
+      <ex:canBeUsedFor rdf:resource="YesNoQuestion"/>
+      <ex:canBeUsedFor rdf:resource="Reminder"/>
+      <ex:canBeUsedFor rdf:resource="Question"/>
+      <ex:canBeUsedFor rdf:resource="Statement"/>
+      <ex:hasConstraint rdf:resource="Noisy"/>
+      <ex:hasConstraint rdf:resource="Bright"/>
+      <ex:hasConstraint rdf:resource="Dim"/>
+      <ex:hasConstraint rdf:resource="Calm"/>
+      <ex:hasConstraint rdf:resource="Private"/>
+      <ex:hasConstraint rdf:resource="Public"/>
+      <ex:hasConstraint rdf:resource="Sitting"/>
+      <ex:hasConstraint rdf:resource="Standing"/>
+    </rdf:Description>
+    
     <rdf:Description rdf:about="Speech">
       <rdf:type rdf:resource="Output"/>
       <ex:canBeUsedFor rdf:resource="YesNoQuestion"/>
