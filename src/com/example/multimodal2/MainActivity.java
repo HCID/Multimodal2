@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import multimodal.RoomFactory;
 import multimodal.schedule.Room;
 import android.app.Activity;
 import android.content.Intent;
