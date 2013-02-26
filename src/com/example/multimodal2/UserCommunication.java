@@ -50,7 +50,7 @@ public class UserCommunication {
 	    	Resource resroom = sol.getResource("room");
 	    	Resource resconstraint = sol.getResource("constraint");
 	    	if(!roomMap.containsKey(resroom.getLocalName())){
-	    		roomMap.put(resroom.getLocalName(), new Room(resroom.getLocalName()));
+	    		roomMap.put(resroom.getLocalName(), new Room(resroom.getURI(), resroom.getLocalName()));
 	    	}
 	    	//adding each constraint (or property) to the given room
 	    	roomMap.get(resroom.getLocalName()).addPropertyByName(resconstraint.getLocalName());

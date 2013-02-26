@@ -20,12 +20,14 @@ public class Room {
 	LinkedList<Property> properties;
 	private String name;
 	private Schedule schedule;
-	public Room(String name, Property ...props){
-		this(name);
+	private String uri;
+	public Room(String uri, String name, Property ...props){
+		this(uri, name);
 		this.properties.addAll(Arrays.asList(props));
 	}
 	
-	public Room(String localName) {
+	public Room(String uri, String localName) {
+		this.uri = uri;
 		this.properties = new LinkedList<Property>();
 		this.name = localName;
 		this.schedule = new Schedule();
@@ -71,5 +73,13 @@ public class Room {
 			throw new IllegalArgumentException(localName+" is not part of the enum Property!");
 		}
 		this.properties.add(prop);
+	}
+
+	public String getName() {
+		return this.name;
+	}
+
+	public String getURI() {
+		return this.uri;
 	}
 }
