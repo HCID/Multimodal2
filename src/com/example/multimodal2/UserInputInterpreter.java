@@ -73,9 +73,15 @@ public class UserInputInterpreter {
     	timeUnitMultiplier.put("p.m.", 60*60*12);
     	timeUnitMultiplier.put("o'clock", 0);
     	timeUnitMultiplier.put("hours", 60*60);
+    	timeUnitMultiplier.put("hour", 60*60);
+    	timeUnitMultiplier.put("seconds", 1);
+    	timeUnitMultiplier.put("second", 1);
     	timeUnitMultiplier.put("minutes", 60);
+    	timeUnitMultiplier.put("minute", 60);
     	timeUnitMultiplier.put("days", 60*60*24);
+    	timeUnitMultiplier.put("day", 60*60*24);
     	timeUnitMultiplier.put("month", 60*60*24*30);
+    	timeUnitMultiplier.put("months", 60*60*24*30);
     	timeUnitMultiplier = Collections.unmodifiableMap(timeUnitMultiplier);
     }
 	
@@ -141,7 +147,7 @@ public class UserInputInterpreter {
 
 	private FuzzyTime interpreteTimeInFuture(String time){
 		time = time.toLowerCase(Locale.getDefault());
-		Pattern datePatt = Pattern.compile(".*?in (\\d+) (hours|minutes|days|months).*");
+		Pattern datePatt = Pattern.compile(".*?in (\\d+) (seconds?|hours?|minutes?|days?|months?).*");
 		Matcher m = datePatt.matcher(time);
 		if (m.matches()) {
 			if(m.groupCount()<3){
