@@ -23,6 +23,7 @@ public class UserCommunication {
 	public UserCommunication(Activity ma) {
 		roomList= RoomFactory.createRoomsFromRDF(this.rdfModel.getModel());
 		this.ma = ma;
+		
 		this.rdfModel = new RDFModel(this.ma);		
 	}
 	
@@ -50,9 +51,8 @@ public class UserCommunication {
 				String msg = "Do you want to book a meeting in the "+bestRoom.getName()+b.getSpeechStartTime()+"?";
 				this.tts.speak(msg, TextToSpeech.QUEUE_FLUSH, null);
 			}
-		}
 
-		
+		}
 		//get some room
 		Room someRoom = roomList.iterator().next();
 		//create constraint
@@ -61,9 +61,9 @@ public class UserCommunication {
 		//constrain to meetings plus minus one hour
 		c.fuzzyTimeConstrain(new FuzzyTime(new Date(), deviation)); 
 		
-		LinkedList<Booking> possibleBookings = someRoom.getPossibleBookings(c);
-		Log.i(this.getClass().getSimpleName(), "Booking :"+possibleBookings.getFirst());
-		possibleBookings.getFirst().book();	
+//		LinkedList<Booking> possibleBookings = someRoom.getPossibleBookings(c);
+//		Log.i(this.getClass().getSimpleName(), "Booking :"+possibleBookings.getFirst());
+//		possibleBookings.getFirst().book();	
 		
 	}
 
