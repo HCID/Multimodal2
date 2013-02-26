@@ -15,11 +15,6 @@ import android.util.Log;
 
 @SuppressLint("DefaultLocale")
 public class UserInputInterpreter {
-	public class UserInput{
-	   // public CommandType commandType;
-	    public String time;
-	    FuzzyTime exactTime;	    
-	   }
 	public enum CommandType{
 	    DISPLAY, CANCEL, MOVE, BOOK, WHEN, WHERE, WHO, REMINDER
 	};
@@ -28,6 +23,12 @@ public class UserInputInterpreter {
 	CommandType command;
 	Room associatedRoom;
 	
+	/**
+	 * UserInputInterpreter can interprete input from the speech recognizer
+	 * 
+	 * @param text the text the user said
+	 * @param allRooms all rooms, to compare with the user input
+	 */
 	@SuppressLint("DefaultLocale")
 	public UserInputInterpreter(String text, LinkedList<Room> allRooms) {
 		text = text.toLowerCase();		
@@ -53,6 +54,11 @@ public class UserInputInterpreter {
 		}
 	}
 
+	/**
+	 * @param text the user speech input
+	 * @param allRooms
+	 * @return a Room that matches the name in the given uesr input string
+	 */
 	private Room interpreteRoom(String text, LinkedList<Room> allRooms) {
 		text = text.toLowerCase();
 		for(Room r : allRooms){
@@ -89,6 +95,10 @@ public class UserInputInterpreter {
     	timeUnitMultiplier = Collections.unmodifiableMap(timeUnitMultiplier);
     }
 	
+	/**
+	 * @param user speech input text
+	 * @return returns FuzzyTime, that tries to be close to the user input
+	 */
 	private  FuzzyTime interpreteTime(String text){
 		FuzzyTime fuztime = interpreteTimeInFuture(text);
 		if(fuztime != null){
@@ -149,13 +159,19 @@ public class UserInputInterpreter {
 		return null;
 	}
 
-	private FuzzyTime interpreteTimeInFuture(String time){
-		time = time.toLowerCase(Locale.getDefault());
+	/**
+	 * interpretes time in the future, as in "in 5 minutes" or "in 10 days"
+	 * 
+	 * @param userInputText the user speech input text
+	 * @return FuzzyTime with a near representation of the time
+	 */
+	private FuzzyTime interpreteTimeInFuture(String userInputText){
+		userInputText = userInputText.toLowerCase(Locale.getDefault());
 		Pattern datePatt = Pattern.compile(".*?in (\\d+) (seconds?|hours?|minutes?|days?|months?).*");
-		Matcher m = datePatt.matcher(time);
+		Matcher m = datePatt.matcher(userInputText);
 		if (m.matches()) {
 			if(m.groupCount()<2){
-				Log.e(this.getClass().getSimpleName(), "Error, not enough regex groups found in string: "+time);
+				Log.e(this.getClass().getSimpleName(), "Error, not enough regex groups found in string: "+userInputText);
 				for(int i=0; i<m.groupCount()+1; i++){
 					System.out.println(m.group(i));
 				}
@@ -172,34 +188,5 @@ public class UserInputInterpreter {
 			}
 		}
 		return null;
-	}
-	
-
-	
-	class UserInputNotUnderstoodException extends Exception{
-		UserInputNotUnderstoodException(String msg){
-			super(msg);
-		}
-	}
-	public static void userSaidCancel() {
-		Log.d("SpeechRepeatActivity", "matched cancel!");
-	}
-
-	public static void userSaidMove() {
-		Log.d("SpeechRepeatActivity", "matched move!");	
-	}
-
-	public static void userSaidShow() {
-		Log.d("SpeechRepeatActivity", "matched show!");
-	}
-
-	public static void userSaidWhere() {
-		
-		Log.d("SpeechRepeatActivity", "matched where!");
-	}
-
-	public static void userSaidWhen() {
-		Log.d("SpeechRepeatActivity", "matched when!");
-	}
-	
+	}	
 }
