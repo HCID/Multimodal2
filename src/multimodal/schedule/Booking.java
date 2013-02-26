@@ -12,6 +12,14 @@ public class Booking implements Serializable {
 	private LinkedList<Person> persons;
 	private Room room;
 
+	/**
+	 * A booking
+	 * 
+	 * @param schedule
+	 * @param startTime
+	 * @param endTime
+	 * @param room
+	 */
 	public Booking(Schedule schedule, Date startTime, Date endTime, Room room){
 		this.schedule = schedule;
 		this.startTime = startTime;
@@ -21,14 +29,27 @@ public class Booking implements Serializable {
 		this.room = room;
 	}
 	
+	/**
+	 * add a person to this booking
+	 * @param person
+	 */
+	@Deprecated
 	public void addPerson(Person person){
 		this.persons.add(person);
 	}
-	
+	/**
+	 * remove a person from this booking
+	 * @param person
+	 */
+	@Deprecated
 	public void removePerson(Person person){
 		this.persons.remove(person);
 	}
 	
+	/**
+	 * book this booking.
+	 * calls it's corresponding schedule to see if it is still valid.
+	 */
 	public void book(){
 		if(this.schedule.book(this)){
 			this.booked = true;
@@ -36,7 +57,10 @@ public class Booking implements Serializable {
 			this.booked = false;
 		}
 	}
-	
+
+	/**
+	 * unbooks this booking, also from it's corresponding schedule
+	 */
 	public void unbook(){
 		if(this.schedule.unbook(this)){
 			this.booked = false;
@@ -45,6 +69,12 @@ public class Booking implements Serializable {
 		}
 	}
 
+	/**
+	 * check if a booking overlaps a given time range
+	 * @param startTime the start of the time range
+	 * @param endTime the end of the time range
+	 * @return true if the booking is inside or overlaps the time range, otherwise false
+	 */
 	public boolean overlaps(Date startTime, Date endTime) {
 		//overlaps in time?
 		if(	startTime.after(this.getEndTime()) || 
@@ -54,10 +84,18 @@ public class Booking implements Serializable {
 		return true;
 	}
 
+	/**
+	 * get the end time of this booking
+	 * @return a date
+	 */
 	public Date getEndTime() {
 		return (Date) endTime.clone();
 	}
 
+	/**
+	 * get the start tome of this booking
+	 * @return
+	 */
 	public Date getStartTime() {
 		return (Date) startTime.clone();
 	}
@@ -67,6 +105,11 @@ public class Booking implements Serializable {
 		return "Booking: "+this.startTime.toString()+" - "+this.endTime.toString();
 	}
 
+	/**
+	 * get a pretty pring version of this booking,
+	 * which canbe used for speech output
+	 * @return
+	 */
 	public String getSpeechStartTime() {
 		StringBuilder sb = new StringBuilder();
 		Date now = new Date();

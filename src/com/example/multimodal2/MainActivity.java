@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import multimodal.RoomFactory;
 import multimodal.schedule.Room;
 import android.app.Activity;
 import android.content.Intent;
@@ -57,7 +56,7 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 		Spinner spinner = (Spinner) findViewById(R.id.current_place);		
 		ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item);
 
-		for(Room room : RoomFactory.createRoomsFromRDF(this.rdfModel.getModel()) ) {
+		for(Room room : rdfModel.createRoomsFromRDF() ) {
 			spinnerArrayAdapter.add(room.getName());
 		}		
 		spinner.setAdapter(spinnerArrayAdapter);		
