@@ -59,8 +59,8 @@ public class UserCommunication {
 			if(this.currentCommand.time != null){
 				final Date reminderTime = this.currentCommand.time.getExactStartTime();
 				final MainActivity mainActivity = this.ma;
-				new Thread(new Runnable() {
-					Date remindAtTime = reminderTime;
+				mainActivity.runOnUiThread(new Runnable() {
+				    Date remindAtTime = reminderTime;
 					MainActivity activity = mainActivity;
 					@Override
 					public void run() {
@@ -71,10 +71,10 @@ public class UserCommunication {
 								e.printStackTrace();
 							}
 						}
-						Toast.makeText(mainActivity, "============ WAKE UP! =========",Toast.LENGTH_LONG).show();
+						Toast.makeText(activity, "============ WAKE UP! =========",Toast.LENGTH_LONG).show();
 						Log.e("REMINDER","============ WAKE UP! =========");
 					}
-				}).start();
+				});
 			}
 		} else
 		if(currentCommand.command == UserInputInterpreter.CommandType.WHEN) {
