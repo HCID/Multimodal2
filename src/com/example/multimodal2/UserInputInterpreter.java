@@ -73,6 +73,8 @@ public class UserInputInterpreter {
     	timeUnitMultiplier = new HashMap<String, Integer>();
     	timeUnitMultiplier.put("a.m.", 0);
     	timeUnitMultiplier.put("p.m.", 60*60*12);
+    	timeUnitMultiplier.put("am", 0);
+    	timeUnitMultiplier.put("pm", 60*60*12);
     	timeUnitMultiplier.put("o'clock", 0);
     	timeUnitMultiplier.put("hours", 60*60);
     	timeUnitMultiplier.put("hour", 60*60);
@@ -112,6 +114,7 @@ public class UserInputInterpreter {
 		}
 		return null;
 	}
+	
 	private FuzzyTime interpreteExactTime(String time) {
 		time = time.toLowerCase(Locale.getDefault());
 		int addTime = 0;
@@ -127,7 +130,7 @@ public class UserInputInterpreter {
 		if(time.contains("day before yesterday")){
 			addTime = -timeUnitMultiplier.get("days");
 		}
-		Pattern datePatt = Pattern.compile(".*?at (\\d+) (p[.]m[.]|a\\.m\\.|o'clock).*");
+		Pattern datePatt = Pattern.compile(".*?at (\\d+) (p\\.?m\\.?|a\\.?m\\.?|o'clock).*");
 		Matcher m = datePatt.matcher(time);
 		if (m.matches()){
 			if( m.groupCount() == 2 && timeUnitMultiplier.containsKey(m.group(2))){
