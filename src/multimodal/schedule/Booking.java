@@ -83,7 +83,7 @@ public class Booking {
 				sb.append(" today ");
 			}
 		}
-		sb.append(" at "+thisDay.getHours()+" o'clock");
+		sb.append(" at "+startTime.getHours()+" o'clock");
 		return sb.toString();
 	}
 }
