@@ -18,9 +18,9 @@ public class MeetingConfirmation  extends Activity  {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.bookingconfirmation);
 		 Booking b = (Booking) getIntent().getSerializableExtra("booking");
-		 TextView startTimeView = (TextView) findViewById(R.id.start_time);
-		 TextView endTimeView = (TextView) findViewById(R.id.end_time);
-		 TextView roomView = (TextView) findViewById(R.id.confirmationroom);
+		 TextView startTimeView = (TextView) findViewById(R.id.starttime2);
+		 TextView endTimeView = (TextView) findViewById(R.id.endtime2);
+		 TextView roomView = (TextView) findViewById(R.id.confirmationroom2);
 		 yesButton = (Button) findViewById(R.id.confirmyes);
 		 noButton = (Button) findViewById(R.id.confirmno);
 		 startTimeView.setText(b.getStartTime().toLocaleString());		 

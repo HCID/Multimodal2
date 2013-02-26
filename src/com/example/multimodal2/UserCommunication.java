@@ -190,6 +190,11 @@ public class UserCommunication {
 		this.ma.startActivityForResult(listenIntent, this.ma.VR_REQUEST);
 	}
 
+	public void confirm(boolean b) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 	
 }
