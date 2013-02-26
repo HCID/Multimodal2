@@ -10,13 +10,15 @@ public class Booking implements Serializable {
 	final private Schedule schedule;
 	private boolean booked;
 	private LinkedList<Person> persons;
+	private Room room;
 
-	public Booking(Schedule schedule, Date startTime, Date endTime){
+	public Booking(Schedule schedule, Date startTime, Date endTime, Room room){
 		this.schedule = schedule;
 		this.startTime = startTime;
 		this.endTime = endTime;
 		this.booked = false;
 		this.persons = new LinkedList<Person>();
+		this.room = room;
 	}
 	
 	public void addPerson(Person person){
@@ -84,6 +86,10 @@ public class Booking implements Serializable {
 		}
 		sb.append(" at "+startTime.getHours()+" o'clock");
 		return sb.toString();
+	}
+
+	public Room getRoom() {
+		return this.room;
 	}
 
 }

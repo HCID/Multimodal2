@@ -13,9 +13,10 @@ public class Schedule implements Serializable {
 	
 	//has to be sorted along the time axis!
 	private LinkedList<Booking> bookings;
-
-	public Schedule(){
+	private Room room;
+	public Schedule(Room room){
 		this.bookings = new LinkedList<Booking>();
+		this.room = room;
 	}
 	
 	private void removeFromSchedule(Booking booking) {
@@ -98,7 +99,7 @@ public class Schedule implements Serializable {
 				return possibleBookings;
 			}
 			//if there are no bookings, there can be no collision
-			possibleBookings.add(new Booking(this, walkAlongStartDate, walkAlongEndDate));
+			possibleBookings.add(new Booking(this, walkAlongStartDate, walkAlongEndDate, this.room));
 		} else {
 			for(Booking b : this.bookings){
 				//current Start Date after latest end date?
@@ -112,7 +113,7 @@ public class Schedule implements Serializable {
 				}
 				if(!b.overlaps(walkAlongStartDate, walkAlongEndDate)){
 					//we've got a booking. That's freaking awesome.
-					possibleBookings.add(new Booking(this, walkAlongStartDate, walkAlongEndDate));
+					possibleBookings.add(new Booking(this, walkAlongStartDate, walkAlongEndDate, this.room));
 				}
 			}			
 		}

@@ -162,8 +162,9 @@ public class UserCommunication {
 				//this.ma.setContentView(R.layout.bookingconfirmation);
 				Intent i = new Intent(this.ma, MeetingConfirmation.class);		
 				i.putExtra("booking", currentBooking);
-				this.ma.startActivity(i); 
+				this.ma.startActivityForResult(i,0); 
 				//this.ma.startActivity(new Intent("android.intent.action.CONFIRM"));
+				this.confirm = true;
 			}			
 		}
 	}

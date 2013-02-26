@@ -32,7 +32,7 @@ public class Room implements Serializable {
 		this.uri = uri;
 		this.properties = new LinkedList<Property>();
 		this.name = localName;
-		this.schedule = new Schedule();
+		this.schedule = new Schedule(this);
 	}
 
 	public LinkedList<Property> getProperties(){
