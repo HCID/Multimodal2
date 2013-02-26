@@ -20,6 +20,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,9 +28,8 @@ import android.widget.Toast;
 public class MainActivity extends Activity implements OnClickListener, OnInitListener {
 
 	protected static final int VR_REQUEST = 999;
-	final String LOG_TAG = "SpeechRepeatActivity";
 	private int MY_DATA_CHECK_CODE = 0;
-	protected TextToSpeech repeatTTS;
+	protected TextToSpeech tts;
 	protected RDFModel rdfModel;
 	private UserCommunication uc;
 	@Override
@@ -37,12 +37,14 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		this.rdfModel = new RDFModel(this);	
-		uc = new UserCommunication(this);
+		this.uc = new UserCommunication(this);
 		Button speechBtn = (Button) findViewById(R.id.speech_btn);
+		Button addEvent = (Button) findViewById(R.id.add_event);
 		PackageManager packManager = getPackageManager();
 		List<ResolveInfo> intActivities = packManager.queryIntentActivities(new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH), 0);
 		if (intActivities.size() != 0) {
 			speechBtn.setOnClickListener(this);
+			addEvent.setOnClickListener(this);
 		}
 		else
 		{
@@ -83,16 +85,17 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 	@Override
 	public void onInit(int arg0) {
 		if (arg0 == TextToSpeech.SUCCESS)
-			repeatTTS.setLanguage(Locale.UK);
+			tts.setLanguage(Locale.UK);
 	}
 
 	@Override
 	public void onClick(View v) {
 		if (v.getId() == R.id.speech_btn) {
-			uc.askForUserSpeechInput();
+			uc.askForUserSpeechInput("What do you want to do?");
+		} else if (v.getId() == R.id.add_event) {
+			uc.InputFromUser((((EditText) findViewById(R.id.editText1)).getText().toString()));
 		}
 	}
-
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -104,7 +107,7 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 		else if (requestCode == MY_DATA_CHECK_CODE)
 		{
 			if (resultCode == TextToSpeech.Engine.CHECK_VOICE_DATA_PASS) {
-				repeatTTS = new TextToSpeech(this, this);
+				tts = new TextToSpeech(this, this);
 			} 
 			else 
 			{
@@ -116,10 +119,7 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 			uc.InputFromUser("yes");
 		} else if(requestCode == 3 && resultCode == RESULT_CANCELED) {
 			uc.InputFromUser("no");
-		}
-		
+		}		
 		super.onActivityResult(requestCode, resultCode, data);
-	}
-	
-
+	}	
 }
