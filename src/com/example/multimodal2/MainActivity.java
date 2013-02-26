@@ -33,7 +33,6 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 	private int MY_DATA_CHECK_CODE = 0;
 	private TextToSpeech repeatTTS;
 	private UserCommunication uc;
-	protected String currentRoom;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -70,7 +69,7 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 			@Override
 			public void onItemSelected(AdapterView<?> arg0, View arg1,
 					int arg2, long arg3) {				
-					uc.currentRoom = ((TextView) arg1).getText().toString();
+					uc.updateRoom(((TextView) arg1).getText().toString());
 				
 			}
 
