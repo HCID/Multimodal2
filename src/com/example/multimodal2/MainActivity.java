@@ -59,11 +59,14 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 		
 		
 		ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item);
+		//spinnerArrayAdapter.setDropDownViewResource(android.R.layout.);
+		
 		for(Room room : RoomFactory.createRoomsFromRDF(this.rdfModel.getModel()) ) {
 			spinnerArrayAdapter.add(room.getName());
 		}
 		
 		spinner.setAdapter(spinnerArrayAdapter);
+		
 		spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 			@Override

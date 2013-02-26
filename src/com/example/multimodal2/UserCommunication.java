@@ -23,11 +23,19 @@ public class UserCommunication {
 	private static final String OUTPUT_TYPE_STATEMENT = "http://imi.org/Statement";
 	private static final String OUTPUT_TYPE_YES_NO_QUESTION = "http://imi.org/YesNoQuestion";
 	private static final String OUTPUT_TYPE_REMINDER = "http://imi.org/Reminder";
-	MainActivity ma;
+	
+	private static final String MODALITY_SPEECH = "http://imi.org/Speech";	
+	private static final String MODALITY_TACTILE = "http://imi.org/Tactile";
+	private static final String MODALITY_MUSIC = "http://imi.org/Music";
+	private static final String MODALITY_LIGHT = "http://imi.org/Light";
+	private static final String MODALITY_SCREEN = "http://imi.org/Screen";
+	
+	private MainActivity ma;
 	
 	private LinkedList<Room> roomList;
 	public String currentRoom;
 	private boolean confirm;
+	private Booking currentBooking;
 	private UserInputInterpreter currentCommand;
 
 	public UserCommunication(MainActivity ma) {
@@ -76,10 +84,11 @@ public class UserCommunication {
 		if(currentCommand.command == UserInputInterpreter.CommandType.BOOK) {
 			if(this.confirm) {
 				if(text.contains("yes")) {
-					Log.d("SpeechRepeatActivity", "booked");
+					currentBooking.book();
 				}
 				this.confirm = false;
 				this.currentCommand = null;
+				this.currentBooking = null;
 			} else {
 				
 				Room associatedRoom = null;
@@ -97,26 +106,13 @@ public class UserCommunication {
 					constr.fuzzyTimeConstrain(currentCommand.time);
 				}
 				LinkedList<Booking> possibleBookings = associatedRoom.getPossibleBookings(constr);
-				Booking b = possibleBookings.getFirst();
+				currentBooking = possibleBookings.getFirst();
 				
 		
-				outputToUser("Do you want to book a meeting in the "+associatedRoom.getSpeechName()+b.getSpeechStartTime()+"?", OUTPUT_TYPE_YES_NO_QUESTION);	
+				outputToUser("Do you want to book a meeting in the "+associatedRoom.getSpeechName()+currentBooking.getSpeechStartTime()+"?", OUTPUT_TYPE_YES_NO_QUESTION);	
 				}
 			}
 		}
-		
-		//get some room
-		//Room someRoom = roomList.iterator().next();
-		//create constraint
-		//Constraint c = new Constraint();
-		//int deviation = 60*60; //one hour
-		//constrain to meetings plus minus one hour
-		//c.fuzzyTimeConstrain(new FuzzyTime(new Date(), deviation)); 
-		
-//		LinkedList<Booking> possibleBookings = someRoom.getPossibleBookings(c);
-//		Log.i(this.getClass().getSimpleName(), "Booking :"+possibleBookings.getFirst());
-//		possibleBookings.getFirst().book();	
-		
 
 	
 	public String getModalitiesForRoom(String type) {
@@ -131,12 +127,14 @@ public class UserCommunication {
 		}	
 		String modality = null;
 		Integer modalityVal = -1;
-		for(Map.Entry<String, Integer>mod : modalities.entrySet()) {
-			if(mod.getValue() > modalityVal) {
+		for(Map.Entry<String, Integer>mod : modalities.entrySet()) {						
+			if(mod.getValue() > modalityVal && !mod.getKey().equals(MODALITY_MUSIC) && !mod.getKey().equals(MODALITY_LIGHT)) {
 				modality = mod.getKey();
 				modalityVal = mod.getValue();
+				Log.d(this.ma.LOG_TAG, "maybe: " + mod.getKey());
 			}
 		}
+		Log.d(this.ma.LOG_TAG, "chosen: " + modality);
 		return modality;
 	}
 	
@@ -145,7 +143,7 @@ public class UserCommunication {
 	}
 	
 	public void outputToUser(String msg, String type) {
-		if(getModalitiesForRoom(type).equals("Speech")) {
+		if(getModalitiesForRoom(type).equals(MODALITY_SPEECH)) {
 			if(type == OUTPUT_TYPE_YES_NO_QUESTION) {
 				this.ma.repeatTTS.setOnUtteranceCompletedListener(new OnUtteranceCompletedListener() {
 			        @Override
@@ -157,13 +155,18 @@ public class UserCommunication {
 				this.confirm = true;
 			}	
 			outputToUserByVoice(msg);
-		}					
+		} else if(getModalitiesForRoom(type).equals(MODALITY_SPEECH)) {
+			if(type == OUTPUT_TYPE_YES_NO_QUESTION) {
+				this.ma.setContentView(R.layout.bookingconfirmation);
+			}			
+		}
 	}
 	
 	private void outputToUserByVoice(String msg) {		
 		HashMap<String, String> myHashAlarm = new HashMap<String, String>();
 		myHashAlarm.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, "SOME MESSAGE");
 		this.ma.repeatTTS.speak(msg, TextToSpeech.QUEUE_FLUSH, myHashAlarm);
+		Toast.makeText(this.ma, msg, Toast.LENGTH_LONG).show();
 	}
 	
 	
