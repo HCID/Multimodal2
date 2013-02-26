@@ -32,22 +32,26 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 	protected TextToSpeech tts;
 	protected RDFModel rdfModel;
 	private UserCommunication uc;
+	
+	/**
+	 * Create the main Activity
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		this.rdfModel = new RDFModel(this);	
-		this.uc = new UserCommunication(this);
 		Button speechBtn = (Button) findViewById(R.id.speech_btn);
 		Button addEvent = (Button) findViewById(R.id.add_event);
+		
+		this.rdfModel = new RDFModel(this);	
+		this.uc = new UserCommunication(this);
+		
 		PackageManager packManager = getPackageManager();
 		List<ResolveInfo> intActivities = packManager.queryIntentActivities(new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH), 0);
 		if (intActivities.size() != 0) {
 			speechBtn.setOnClickListener(this);
 			addEvent.setOnClickListener(this);
-		}
-		else
-		{
+		} else {
 			speechBtn.setEnabled(false);
 			Toast.makeText(this, "Oops - Speech recognition not supported!", Toast.LENGTH_LONG).show();
 		}
@@ -76,18 +80,25 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 		});				
 	}
 
+	@Deprecated
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		//getMenuInflater().inflate(R.menu.activity_main, menu);
 		return true;
 	}
 
+	/**
+	 * setup TextToSpeech language
+	 */
 	@Override
 	public void onInit(int arg0) {
 		if (arg0 == TextToSpeech.SUCCESS)
 			tts.setLanguage(Locale.UK);
 	}
 
+	/**
+	 * onClick handlers for the speech recognition button
+	 */
 	@Override
 	public void onClick(View v) {
 		if (v.getId() == R.id.speech_btn) {
@@ -97,6 +108,9 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 		}
 	}
 
+	/**
+	 * Receive the results of the other activities
+	 */
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == VR_REQUEST && resultCode == RESULT_OK)
