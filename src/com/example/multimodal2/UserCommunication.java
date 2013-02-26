@@ -20,6 +20,7 @@ public class UserCommunication {
 	TextToSpeech tts;
 	RDFModel rdfModel;
 	private Collection<Room> roomList;
+	public String currentRoom;
 	public UserCommunication(Activity ma) {
 		roomList= RoomFactory.createRoomsFromRDF(this.rdfModel.getModel());
 		this.ma = ma;
@@ -35,6 +36,7 @@ public class UserCommunication {
 		UserInputInterpreter uii = new UserInputInterpreter(text);
 		if(uii.command == UserInputInterpreter.CommandType.WHEN) {
 		
+
 		} else if(uii.command == UserInputInterpreter.CommandType.BOOK) {
 			Room bestRoom = null;
 			for(Room room : roomList ) {
@@ -50,6 +52,15 @@ public class UserCommunication {
 				Booking b = possibleBookings.getFirst();
 				String msg = "Do you want to book a meeting in the "+bestRoom.getName()+b.getSpeechStartTime()+"?";
 				this.tts.speak(msg, TextToSpeech.QUEUE_FLUSH, null);
+			}
+
+		}
+		Collection<Room> roomList= RoomFactory.createRoomsFromRDF(this.rdfModel.getModel());
+		Log.d(this.getClass().getSimpleName(), "Parsed "+roomList.size()+" rooms from RDF" );
+		for(Room room : roomList ) {
+			if(room.getName() == currentRoom) {
+				HashMap<String, Integer> modalities = this.rdfModel.getModalityForRoom(room);
+				Log.d("SpeechRepeatActivity", "we are in: " + room.getName());
 			}
 
 		}

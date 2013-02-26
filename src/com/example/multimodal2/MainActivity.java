@@ -70,7 +70,7 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 			@Override
 			public void onItemSelected(AdapterView<?> arg0, View arg1,
 					int arg2, long arg3) {				
-				currentRoom = ((TextView) arg1).getText().toString();
+					uc.currentRoom = ((TextView) arg1).getText().toString();
 				
 			}
 
