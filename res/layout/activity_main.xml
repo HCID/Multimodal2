@@ -112,11 +112,12 @@
             </EditText>
 
             <Button
-                android:id="@+id/button1"
+                android:id="@+id/add_event"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:hint="Type event"
-                android:text="@string/add_event" />
+                android:text="@string/add_event"
+                android:onClick="onAddEventClick" />
 
         </LinearLayout>
 
