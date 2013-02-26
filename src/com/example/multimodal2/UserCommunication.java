@@ -48,11 +48,6 @@ public class UserCommunication {
 	}
 	
 	public void InputFromUser(String text) {
-		Log.d("SpeechRepeatActivity", text);
-		//Toast.makeText(this.ma, "You said: "+text, Toast.LENGTH_LONG).show();
-		//if(this.tts != null) {
-			//this.tts.speak("You said: "+text, TextToSpeech.QUEUE_FLUSH, null);
-		//}
 		if(this.currentCommand == null) {
 			this.currentCommand = new UserInputInterpreter(text, roomList);
 		}
