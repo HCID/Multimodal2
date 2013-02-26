@@ -84,6 +84,7 @@
 <!-- Rooms -->
 <rdf:Description rdf:about="OfficeRoom">
   <rdf:type rdf:resource="Room"/>
+  <ex:alias>office room</ex:alias>
   <ex:hasConstraint rdf:resource="Bright"/>
   <ex:hasConstraint rdf:resource="Noisy"/>
   <ex:hasConstraint rdf:resource="Public"/>
@@ -91,6 +92,7 @@
 </rdf:Description>
 <rdf:Description rdf:about="MeetingRoom">
   <rdf:type rdf:resource="Room"/>
+  <ex:alias>meeting room</ex:alias>
   <ex:hasConstraint rdf:resource="Bright"/>
   <ex:hasConstraint rdf:resource="Noisy"/>
   <ex:hasConstraint rdf:resource="Private"/>
@@ -98,6 +100,8 @@
 </rdf:Description>
 <rdf:Description rdf:about="Hallway">
   <rdf:type rdf:resource="Room"/>
+  <ex:alias>hallway</ex:alias>
+  <ex:alias>hall way</ex:alias>
   <ex:hasConstraint rdf:resource="Noisy"/>
   <ex:hasConstraint rdf:resource="Bright"/>
   <ex:hasConstraint rdf:resource="Moving"/>
@@ -106,6 +110,8 @@
 
 <rdf:Description rdf:about="RestingRoom">
   <rdf:type rdf:resource="Room"/>
+  <ex:alias>resting room</ex:alias>
+  <ex:alias>chillout lounge</ex:alias>
   <ex:hasConstraint rdf:resource="Calm"/>
   <ex:hasConstraint rdf:resource="Dim"/>
   <ex:hasConstraint rdf:resource="Private"/>
@@ -114,6 +120,10 @@
 
 <rdf:Description rdf:about="Bathroom">
   <rdf:type rdf:resource="Room"/>
+  <ex:alias>bath room</ex:alias>
+  <ex:alias>toilet</ex:alias>
+  <ex:alias>wc</ex:alias>
+  <ex:alias>water closet</ex:alias>
   <ex:hasConstraint rdf:resource="Calm"/>
   <ex:hasConstraint rdf:resource="Private"/>
   <ex:hasConstraint rdf:resource="Dim"/>
@@ -123,6 +133,7 @@
 
 <rdf:Description rdf:about="Kitchen">
   <rdf:type rdf:resource="Room"/>
+  <ex:alias>kitchen</ex:alias>
   <ex:hasConstraint rdf:resource="Bright"/>
   <ex:hasConstraint rdf:resource="Standing"/>
   <ex:hasConstraint rdf:resource="Noisy"/>

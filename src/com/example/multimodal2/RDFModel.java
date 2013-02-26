@@ -40,11 +40,8 @@ public class RDFModel {
 		"SELECT ?modality ?constraint WHERE { \n" +
 		"	?modality ex:hasConstraint ?constraint . \n" +
 		"	?modality rdf:type ex:Output . \n" +
-		"	{" +
-		"		SELECT ?constraint WHERE {\n "+
-		"			<"+room.getURI()+"> ex:hasConstraint ?constraint  \n" +
-		"		} \n" +
-		"	} \n"+
+		"	?room ex:hasConstraint ?constraint . \n" +
+		"	FILTER ( ?room = <"+room.getURI()+">) \n" +
 		"} \n");
 
 		QueryExecution qe = QueryExecutionFactory.create(query, this.model);
