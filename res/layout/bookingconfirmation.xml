@@ -17,7 +17,7 @@
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="275dp"
         android:orientation="vertical" >
 
         <AutoCompleteTextView
@@ -61,7 +61,7 @@
     <TextView
         android:id="@+id/confirmationmessage"
         android:layout_width="331dp"
-        android:layout_height="63dp"
+        android:layout_height="68dp"
         android:text="Do you want to confirm this booking?"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textSize="30dp" />
