@@ -1,11 +1,12 @@
 package multimodal.schedule;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.LinkedList;
 
 import multimodal.Property;
 
-public class Person {
+public class Person implements Serializable {
 	static int nextUID = 0;
 	private int uid;
 	private LinkedList<Property> capabilities;

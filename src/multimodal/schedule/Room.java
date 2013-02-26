@@ -1,12 +1,13 @@
 package multimodal.schedule;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.LinkedList;
 
 import multimodal.Constraint;
 import multimodal.Property;
 
-public class Room {
+public class Room implements Serializable {
 	public static final Room DUMMY_ROOM = new Room();
 	private int uid;
 	public Room(){

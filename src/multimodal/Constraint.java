@@ -1,11 +1,12 @@
 package multimodal;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.LinkedList;
 
 import multimodal.schedule.Room;
 
-public class Constraint {
+public class Constraint implements Serializable {
 	private LinkedList<Property> properties;
 	private Date startTime;
 	private Date endTime;

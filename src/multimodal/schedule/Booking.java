@@ -1,11 +1,10 @@
 package multimodal.schedule;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.LinkedList;
 
-import multimodal.FuzzyTime;
-
-public class Booking {
+public class Booking implements Serializable {
 	final private Date startTime;
 	final private Date endTime;
 	final private Schedule schedule;
@@ -53,11 +52,11 @@ public class Booking {
 		return true;
 	}
 
-	Date getEndTime() {
+	public Date getEndTime() {
 		return (Date) endTime.clone();
 	}
 
-	Date getStartTime() {
+	public Date getStartTime() {
 		return (Date) startTime.clone();
 	}
 	
@@ -86,4 +85,5 @@ public class Booking {
 		sb.append(" at "+startTime.getHours()+" o'clock");
 		return sb.toString();
 	}
+
 }

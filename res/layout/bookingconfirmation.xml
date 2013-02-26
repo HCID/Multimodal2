@@ -17,10 +17,10 @@
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="275dp"
         android:orientation="vertical" >
 
-        <AutoCompleteTextView
+        <TextView
             android:id="@+id/confirmationroom"
             android:layout_width="278dp"
             android:layout_height="57dp"
@@ -31,7 +31,7 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textSize="25dp" />
 		
-        <AutoCompleteTextView
+        <TextView
             android:id="@+id/start_time"
             android:layout_width="278dp"
             android:layout_height="57dp"
@@ -39,13 +39,13 @@
             android:background="@drawable/bg"
             android:ems="10"
             android:text="Start Time:"
-            android:textAppearance="?android:attr/textAppearanceMedium"
+            
             android:textSize="25dp" >
 
             <requestFocus />
-        </AutoCompleteTextView>
+        </TextView>
 
-        <AutoCompleteTextView
+        <TextView
             android:id="@+id/end_time"
             android:layout_width="278dp"
             android:layout_height="57dp"
@@ -53,7 +53,7 @@
             android:background="@drawable/bg"
             android:ems="10"
             android:text="End Time:"
-            android:textAppearance="?android:attr/textAppearanceMedium"
+            
             android:textSize="25dp" />
 
     </LinearLayout>
@@ -62,8 +62,7 @@
         android:id="@+id/confirmationmessage"
         android:layout_width="331dp"
         android:layout_height="63dp"
-        android:text="Do you want to confirm this booking?"
-        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Do you want to confirm this booking?"        
         android:textSize="30dp" />
 
     <LinearLayout
