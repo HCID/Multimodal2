@@ -153,29 +153,36 @@ public class Schedule implements Serializable {
 		return getNextPossibleBookings(minimumStartDate, c.getEndTime(), c.getDuration());		
 	}
 	
-	private LinkedList<Booking> getNextPossibleBookings(Date walkAlongStartDate, Date endDate, long duration){
+	/**
+	 * get the next possible booking for a certain tie period
+	 * @param startDate the start of the time period
+	 * @param endDate the end of the time period
+	 * @param duration the duration of the booking
+	 * @return
+	 */
+	private LinkedList<Booking> getNextPossibleBookings(Date startDate, Date endDate, long duration){
 		LinkedList<Booking> possibleBookings = new LinkedList<Booking>();
-		Date walkAlongEndDate = new Date(walkAlongStartDate.getTime()+duration*1000);
+		Date walkAlongEndDate = new Date(startDate.getTime()+duration*1000);
 		if(this.bookings.size()==0){
-			if(walkAlongStartDate.getTime()>= endDate.getTime()){
+			if(startDate.getTime()>= endDate.getTime()){
 				return possibleBookings;
 			}
 			//if there are no bookings, there can be no collision
-			possibleBookings.add(new Booking(this, walkAlongStartDate, walkAlongEndDate, this.room));
+			possibleBookings.add(new Booking(this, startDate, walkAlongEndDate, this.room));
 		} else {
 			for(Booking b : this.bookings){
 				//current Start Date after latest end date?
-				if(walkAlongStartDate.getTime()>= endDate.getTime()){
+				if(startDate.getTime()>= endDate.getTime()){
 					return possibleBookings;
 				}
 				//jump over booking if it overlaps
-				if(b.overlaps(walkAlongStartDate, walkAlongEndDate)){
-					walkAlongStartDate = new Date(b.getEndTime().getTime()+1);
-					walkAlongEndDate = new Date(walkAlongStartDate.getTime()+duration*1000);
+				if(b.overlaps(startDate, walkAlongEndDate)){
+					startDate = new Date(b.getEndTime().getTime()+1);
+					walkAlongEndDate = new Date(startDate.getTime()+duration*1000);
 				}
-				if(!b.overlaps(walkAlongStartDate, walkAlongEndDate)){
+				if(!b.overlaps(startDate, walkAlongEndDate)){
 					//we've got a booking. That's freaking awesome.
-					possibleBookings.add(new Booking(this, walkAlongStartDate, walkAlongEndDate, this.room));
+					possibleBookings.add(new Booking(this, startDate, walkAlongEndDate, this.room));
 				}
 			}			
 		}
