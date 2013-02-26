@@ -1,7 +1,5 @@
 package multimodal;
 
-import FuzzyTime;
-
 import java.util.Date;
 
 public class FuzzyTime implements Cloneable{
