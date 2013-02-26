@@ -16,8 +16,7 @@ import android.util.Log;
 public class UserCommunication {
 	
 	MainActivity ma;
-	TextToSpeech tts;
-	RDFModel rdfModel;
+	
 	private LinkedList<Room> roomList;
 	public String currentRoom;
 	private boolean confirm;
@@ -30,8 +29,8 @@ public class UserCommunication {
 		
 		this.ma = ma;
 		
-		this.rdfModel = new RDFModel(this.ma);		
-		roomList= RoomFactory.createRoomsFromRDF(this.rdfModel.getModel());
+			
+		roomList= RoomFactory.createRoomsFromRDF(this.ma.rdfModel.getModel());
 	}
 	
 	public void InputFromUser(String text) {
@@ -92,11 +91,6 @@ public class UserCommunication {
 //		possibleBookings.getFirst().book();	
 		
 
-	public void updateTTS(TextToSpeech repeatTTS) {
-		this.tts = repeatTTS;
-		
-	}
-	
 	
 	public void updateRoom(String cRoom) {
 		this.currentRoom = cRoom;
@@ -105,14 +99,14 @@ public class UserCommunication {
 		for(Room room : this.roomList ) {
 			Log.d("SpeechRepeatActivity", "is: " + room.getName() + " and " + cRoom + " the same thing?");
 			if(room.getName().equals(currentRoom)) {
-				modalities = this.rdfModel.getModalityForRoom(room);				
+				modalities = this.ma.rdfModel.getModalityForRoom(room);				
 				break;
 			}
 		}		
 	}
 	
 	public void askUser(String msg, typeOfQuestion type) {
-		this.tts.setOnUtteranceCompletedListener(new OnUtteranceCompletedListener() {
+		this.ma.repeatTTS.setOnUtteranceCompletedListener(new OnUtteranceCompletedListener() {
 	        @Override
 	        public void onUtteranceCompleted(String utteranceId) {
 	        	Log.d("SpeechRepeatActivity", "123");
@@ -122,7 +116,7 @@ public class UserCommunication {
 	    });
 		HashMap<String, String> myHashAlarm = new HashMap<String, String>();
 		myHashAlarm.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, "SOME MESSAGE");
-		this.tts.speak(msg, TextToSpeech.QUEUE_FLUSH, myHashAlarm);
+		this.ma.repeatTTS.speak(msg, TextToSpeech.QUEUE_FLUSH, myHashAlarm);
 		this.confirm = true;
 	}
 	

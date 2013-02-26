@@ -14,7 +14,6 @@ import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.TextToSpeech.OnInitListener;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -31,12 +30,14 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 	protected static final int VR_REQUEST = 999;
 	final String LOG_TAG = "SpeechRepeatActivity";
 	private int MY_DATA_CHECK_CODE = 0;
-	private TextToSpeech repeatTTS;
+	protected TextToSpeech repeatTTS;
+	protected RDFModel rdfModel;
 	private UserCommunication uc;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		this.rdfModel = new RDFModel(this);	
 		uc = new UserCommunication(this);
 		Button speechBtn = (Button) findViewById(R.id.speech_btn);
 		PackageManager packManager = getPackageManager();
@@ -54,16 +55,15 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 		startActivityForResult(checkTTSIntent, MY_DATA_CHECK_CODE);
 		
 		Spinner spinner = (Spinner) findViewById(R.id.current_place);
-		RDFModel rdfModel = new RDFModel(this);	
+
 		
 		
 		ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item);
-		for(Room room : RoomFactory.createRoomsFromRDF(rdfModel.getModel()) ) {
+		for(Room room : RoomFactory.createRoomsFromRDF(this.rdfModel.getModel()) ) {
 			spinnerArrayAdapter.add(room.getName());
 		}
 		
 		spinner.setAdapter(spinnerArrayAdapter);
-		
 		spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 			@Override
@@ -72,7 +72,6 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 					uc.updateRoom(((TextView) arg1).getText().toString());
 				
 			}
-
 			@Override
 			public void onNothingSelected(AdapterView<?> arg0) {
 				// TODO Auto-generated method stub
@@ -115,7 +114,6 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 		{
 			if (resultCode == TextToSpeech.Engine.CHECK_VOICE_DATA_PASS) {
 				repeatTTS = new TextToSpeech(this, this);
-				uc.updateTTS(repeatTTS);
 			} 
 			else 
 			{
