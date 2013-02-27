@@ -131,7 +131,7 @@ public class UserCommunication {
 		
 		for(Room room : this.roomList ) {
 			if(room.getName().equals(locationContext)) {
-				modalities = this.ma.rdfModel.getModalityForRoom(room, OUTPUT_TYPE_QUESTION);				
+				modalities = this.ma.rdfModel.getModalityForRoom(room, type);				
 				break;
 			}
 		}	
@@ -140,8 +140,9 @@ public class UserCommunication {
 		for(Map.Entry<String, Integer>mod : modalities.entrySet()) {						
 			if(mod.getValue() > modalityVal && !mod.getKey().equals(MODALITY_MUSIC) && !mod.getKey().equals(MODALITY_LIGHT)) {
 				modality = mod.getKey();
-				modalityVal = mod.getValue();
+				modalityVal = mod.getValue();				
 			}
+			Log.d(this.getClass().getName(), mod.getValue() + " - " + mod.getKey());
 		}
 		Log.d(this.getClass().getName(), "chosen modality: " + modality);
 		return modality;
